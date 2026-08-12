@@ -1,0 +1,113 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/ldp3dalnzn9c1-risk-list
+derived_from:
+- openapi/diagnostic-robotics-precision-population-health-openapi.yml
+- openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+- openapi/diagnostic-robotics-symptom-search-openapi.yml
+authentication:
+  style: mixed
+  precision_population_health: OAuth 2.0 client_id/client_secret exchanged at POST /api/oauth/token for a bearer token
+  patient_questionnaire: API key in the x-client request header
+  cross_link: authentication/diagnostic-robotics-authentication.yml
+tenancy:
+  model: per-customer subdomain
+  pattern: https://[CLIENT].precision-population-health.diagnosticrobotics.com
+  note: >-
+    The customer identifier is part of the HOST, not a header or a path segment. The published spec ships only
+    the sandbox host; a production integration must be told its own subdomain out of band. The questionnaire
+    specs use the placeholder host env-name.diagnosticrobotics.com for the same reason.
+idempotency:
+  supported: false
+  evidence: >-
+    No Idempotency-Key header, no idempotency parameter and no idempotency guidance appears in any of the three
+    specs or in any of the thirteen developer-portal articles. Retry-safety of the write operations
+    (POST /api/v1/dataset/{dataset_type}/upload, PATCH .../diagnoses, POST .../NextStep/{id}/$update) is
+    undefined. NO Idempotency pointer is wired in apis.yml, because there is no idempotency contract to point at.
+pagination:
+  style: offset-limit
+  applies_to: GET /api/v2/RiskList/{id}
+  params:
+  - name: offset
+    in: query
+    required: false
+  - name: limit
+    in: query
+    required: false
+  response_fields:
+  - entries
+  - total
+  - offset
+  example: GET /api/v2/RiskList/{id}?offset=10&limit=30
+  note: >-
+    Offset/limit is documented in the Risk List integration guide but is NOT declared as parameters on the
+    operation in the OpenAPI, so a client generated from the spec cannot paginate. Recorded as a spec/doc
+    divergence, not fabricated into the spec.
+  docs: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/ldp3dalnzn9c1-risk-list
+filtering:
+  style: repeated query parameters
+  example: GET /api/v2/RiskList?population=ACO&product=CHF&product=ALL_INPATIENT
+  params: [product, population]
+hateoas:
+  present: true
+  detail: >-
+    Risk list entries carry relative resource links - url, riskProfileUrl, patientProfileUrl - so a client can
+    walk from a risk list to a risk profile to a patient profile without composing paths itself.
+sub_resource_actions:
+  style: $-prefixed and _-prefixed action segments on a resource
+  examples:
+  - GET /api/v2/RiskList/{id}/$export
+  - POST /api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$update
+  - POST /api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$ignore
+  - GET /api/v2/RiskList/{id}/_widget
+  note: The $ prefix mirrors FHIR operation naming; the _widget suffix returns a 204 with a Location header.
+redirect_semantics:
+  detail: >-
+    All four widget operations return 204 No Content with a Location header carrying a short-lived, single-use
+    signed widget URL. The token embedded in that URL expires after a few minutes and must not be cached.
+  operations:
+  - get_risk_list_widget_api_v2_RiskList__id___widget_get
+  - get_risk_profile_widget_api_v2_RiskProfile__patientId___widget_get
+  - get_patient_profile_widget_api_v2_PatientProfile__patientId___widget_get
+  - get_patient_risk_adjustment_profile_widget_api_v2_RiskAdjustmentProfile__patientId___widget_get
+metadata:
+  present: true
+  detail: Risk list responses carry a metadata object (id, url, product, population, serveDate, updateDate).
+request_tracing:
+  request_id_header: none documented
+versioning:
+  scheme: uri-path
+  current:
+  - api: Precision Population Health
+    version: v2
+    spec_version: 2.3.35
+    note: The dataset upload endpoint is still on /api/v1 while every other resource is /api/v2.
+  - api: Patient Questionnaire
+    version: v2
+    spec_version: 0.0.1
+  cross_link: lifecycle/diagnostic-robotics-lifecycle.yml
+error_envelope:
+  field: detail
+  rfc9457: false
+  cross_link: errors/diagnostic-robotics-problem-types.yml
+rate_limit_signaling:
+  headers: none documented
+  cross_link: rate-limits/diagnostic-robotics-rate-limits.yml
+payload_limits:
+- scope: POST /api/v1/dataset/{dataset_type}/upload
+  max_request_body: 200MB
+  guidance: Split larger datasets into chunks, gzip before upload, or contact support.
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/z7azwtx4q4s33-fhir-cclf-file-data-upload-api
+content_types:
+  requests:
+  - application/x-www-form-urlencoded (token endpoint)
+  - application/x-gzip (dataset upload)
+  - application/json
+  - multipart/form-data (dataset upload, per spec)
+  responses:
+  - application/json
+data_formats_ingested:
+- FHIR R4 US Core STU3 ndjson (Patient, Coverage, ExplanationOfBenefit, Claim, ClaimResponse)
+- CMS CCLF
+- CSV
+- Parquet

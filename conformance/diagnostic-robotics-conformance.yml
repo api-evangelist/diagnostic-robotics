@@ -1,0 +1,94 @@
+generated: '2026-08-12'
+method: searched
+source: https://diagnosticrobotics.com/about/trust-center, https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+standards:
+- id: openapi-3
+  conforms: true
+  evidence: openapi/diagnostic-robotics-precision-population-health-openapi.yml declares openapi 3.0.2
+- id: swagger-2
+  conforms: true
+  evidence: The Patient Questionnaire and Symptom Search contracts are Swagger 2.0, not OpenAPI 3.x
+- id: oauth2
+  conforms: true
+  evidence: components.securitySchemes declares OAuth2PasswordBearer (password) and OAuth2AuthorizationCodeBearer
+    (authorizationCode) in the Precision Population Health spec
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: false
+  evidence: no /.well-known/oauth-authorization-server document served on any host (well-known/diagnostic-robotics-well-known.yml)
+- id: oidc
+  conforms: false
+  evidence: no openIdConnect security scheme and no /.well-known/openid-configuration
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'no application/problem+json response in any spec; FastAPI {"detail": ...} envelope instead'
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on diagnosticrobotics.com and docs.diagnosticrobotics.com
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no deprecation or sunset policy published
+- id: fhir-r4
+  conforms: partial
+  evidence: >-
+    The dataset upload service ingests FHIR R4 US Core STU3 ndjson (Patient, Coverage, ExplanationOfBenefit,
+    Claim, ClaimResponse) and the risk API borrows FHIR $operation path naming ($export, $update, $ignore).
+    The API does NOT expose FHIR resources or a FHIR CapabilityStatement - FHIR is an ingestion format here,
+    not the API's own interface.
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/9w3ijqwkppnuj-fhir-data-ingestion-guide
+- id: us-core-stu3
+  conforms: partial
+  evidence: named as a supported ingestion profile in the FHIR Data Ingestion Guide
+- id: cms-cclf
+  conforms: true
+  evidence: CMS Claim and Claim Line Feed files are a first-class supported upload format (format=cclf)
+- id: cms-bcda
+  conforms: true
+  evidence: a dedicated BCDA (Beneficiary Claims Data API) ingestion guide is published
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/cdq56xlhj4ote-bcda-data-ingestion-guide
+- id: cms-hcc-raf
+  conforms: true
+  evidence: RiskAdjustmentProfile resource returns HCC recommendations, ICD suggestions and RAF gap data
+- id: hipaa
+  conforms: true
+  evidence: 'Trust Center lists HIPAA; the offering overview states "HIPAA self assessed"'
+  attestation_type: self-assessment
+- id: soc2-type-ii
+  conforms: true
+  evidence: Trust Center lists SOC 2 Type II ("Secure Organization Controls")
+  attestation_type: third-party audit (report available under NDA on request)
+- id: iso-27001
+  conforms: true
+  evidence: Trust Center lists ISO 27001 Information Security Management
+- id: iso-27799
+  conforms: true
+  evidence: the Offering Overview article names ISO27099 [sic - ISO 27799, health informatics security management]
+- id: json-api
+  conforms: false
+- id: odata
+  conforms: false
+- id: scim
+  conforms: false
+- id: graphql
+  conforms: false
+- id: asyncapi
+  conforms: false
+  evidence: no event, webhook or streaming surface is published; risk data is pulled, and Care Events are
+    returned to Diagnostic Robotics as batch file uploads, not webhooks
+compliance_program:
+  published: true
+  url: https://diagnosticrobotics.com/about/trust-center
+  certifications:
+  - HIPAA
+  - ISO 27001
+  - ISO 27799
+  - SOC 2 Type II
+  controls_claimed:
+  - annual third-party penetration testing
+  - clinician-reviewed clinical models
+  - policy-as-code governance with versioned audit trails
+  - least-privilege, role-scoped, logged data segregation
+  evidence_access: SOC 2 report, security questionnaires and architecture documentation available under NDA
+    via the contact form
+  no_public_artifacts: >-
+    No trust portal (Vanta/Drata/SafeBase), no downloadable report, no subprocessor list and no security contact
+    address are published - only prose on a marketing page behind a "request under NDA" contact form.

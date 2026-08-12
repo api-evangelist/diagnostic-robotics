@@ -1,0 +1,53 @@
+generated: '2026-08-12'
+method: probed
+source: live GET probes of every apis.yml host and every OpenAPI servers[] host
+result: no-hit
+summary: >-
+  No /.well-known/ document is served on any Diagnostic Robotics host. The marketing site and the Stoplight
+  docs host return a genuine 404 for every path. The API host
+  (sandbox.precision-population-health.diagnosticrobotics.com) returns HTTP 200 for EVERY /.well-known/ path,
+  but the body is always the same React single-page-app index.html with content-type text/html - a catch-all
+  route, not a document. Those 200s are recorded as misses. No WellKnown or SecurityTxt pointer is wired in
+  apis.yml, because the provider does not in fact serve any of these surfaces.
+hosts:
+- host: https://diagnosticrobotics.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: https://docs.diagnosticrobotics.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+  - {path: /llms.txt, status: 404}
+- host: https://sandbox.precision-population-health.diagnosticrobotics.com
+  note: SPA catch-all - every path below answered 200 with text/html (React index.html), so all are MISSES
+  documents:
+  - {path: /.well-known/security.txt, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/openid-configuration, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/oauth-authorization-server, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/oauth-protected-resource, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/api-catalog, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/ai-plugin.json, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/agent-card.json, status: 200, content_type: text/html, document: false}
+  - {path: /.well-known/agent.json, status: 200, content_type: text/html, document: false}
+  - {path: /llms.txt, status: 200, content_type: text/html, document: false}
+  - {path: /openapi.json, status: 200, content_type: text/html, document: false}
+- host: https://digital-outreach.us.auth0.com
+  note: OAuth authorization server named in the published OpenAPI; the tenant no longer exists
+  documents:
+  - {path: /.well-known/openid-configuration, status: 404, body: 'Unknown host: digital-outreach.us.auth0.com'}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/jwks.json, status: 404}
+files: []
+checked: '2026-08-12'

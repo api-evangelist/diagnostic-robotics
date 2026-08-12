@@ -1,0 +1,669 @@
+{
+    "swagger": "2.0",
+    "basePath": "/api/pq",
+    "paths": {
+        "/v2/patients/": {
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Patient Created",
+                        "schema": {
+                            "$ref": "#/definitions/CreatePatientResponse"
+                        }
+                    }
+                },
+                "description": "Create a patient with basic demographic data",
+                "operationId": "post_patient_list_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/CreatePatientRequest"
+                        }
+                    }
+                ],
+                "tags": [
+                    "Patients v2"
+                ]
+            }
+        },
+        "/v2/patients/{patient_id}": {
+            "parameters": [
+                {
+                    "name": "patient_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Patient found",
+                        "schema": {
+                            "$ref": "#/definitions/CreatePatientResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Patient not found"
+                    }
+                },
+                "description": "Get patient with basic demographic data",
+                "operationId": "get_get_patient_resource",
+                "parameters": [
+                    {
+                        "name": "external",
+                        "in": "query",
+                        "type": "boolean"
+                    }
+                ],
+                "tags": [
+                    "Patients v2"
+                ]
+            }
+        },
+        "/v2/patients/{patient_id}/visits": {
+            "parameters": [
+                {
+                    "name": "patient_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Visit Created",
+                        "schema": {
+                            "$ref": "#/definitions/CreateVisitResponse"
+                        }
+                    }
+                },
+                "description": "Create new visit for a patient",
+                "operationId": "post_create_visit_to_patient_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Patients v2"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/CreateVisitResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Patient not found error"
+                    }
+                },
+                "description": "Query all active visits for a patient",
+                "operationId": "get_create_visit_to_patient_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Patients v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "get_get_visit_by_id_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            },
+            "patch": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "patch_get_visit_by_id_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/finish": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "description": "Finalize visit and trigger \"Questionnaire finished\" webhooks",
+                "operationId": "post_finished_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/medical_summary": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string",
+                            "description": "Medical summary text",
+                            "example": "45 year old female presents with sore throat that started 5 days ago..."
+                        }
+                    },
+                    "404": {
+                        "description": "Visit not found error"
+                    }
+                },
+                "description": "Get medical summary for visit",
+                "operationId": "get_medical_summary_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/outcomes": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/OutcomeModel"
+                        }
+                    },
+                    "404": {
+                        "description": "Visit not found error"
+                    }
+                },
+                "description": "Get questionnaire predicted outcomes",
+                "operationId": "get_visit_outcomes_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/questions/first_unanswered": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/QuestionIdentifier"
+                        }
+                    }
+                },
+                "description": "Get first seed",
+                "operationId": "get_questions_first_unanswered_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Questions v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/questions/{seed}": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "seed",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/GetQuestionResponse"
+                        }
+                    }
+                },
+                "description": "Get question details by seed",
+                "operationId": "get_question_by_seed_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Questions v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/questions/{seed}/respond": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "seed",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Question Answered",
+                        "schema": {
+                            "$ref": "#/definitions/AnswerQuestionResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid seed"
+                    }
+                },
+                "description": "Answer a question",
+                "operationId": "post_question_response_resource",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/AnswerQuestionRequest"
+                        }
+                    },
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Questions v2"
+                ]
+            }
+        },
+        "/v2/visits/{visit_id}/symptoms/{symptom_id}": {
+            "parameters": [
+                {
+                    "name": "visit_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                },
+                {
+                    "name": "symptom_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "post": {
+                "responses": {
+                    "201": {
+                        "description": "Symptom added to visit",
+                        "schema": {
+                            "$ref": "#/definitions/SymptomResponse"
+                        }
+                    }
+                },
+                "description": "Add a symptom to the current visit",
+                "operationId": "post_symptoms_resource",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "required": true,
+                        "description": "Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token",
+                        "name": "Authorization",
+                        "type": "string"
+                    }
+                ],
+                "tags": [
+                    "Visits v2"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Diagnostic Robotics API",
+        "version": "0.0.1",
+        "description": "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "apikey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "x-client",
+            "description": "Client API key, provided by Diagnostic Robotics, must be supplied with any request"
+        }
+    },
+    "security": [
+        {
+            "apikey": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Visits v2",
+            "description": "Patient visits resource"
+        },
+        {
+            "name": "Patients v2",
+            "description": "Patients resource"
+        },
+        {
+            "name": "Questions v2",
+            "description": "Questions resource"
+        }
+    ],
+    "definitions": {
+        "SymptomResponse": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "medical_title": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "OutcomeModel": {
+            "properties": {
+                "outcome_id": {
+                    "type": "integer"
+                },
+                "weighted_priority": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "details": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "CreatePatientResponse": {
+            "properties": {
+                "uid": {
+                    "type": "string"
+                },
+                "age": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "sex": {
+                    "type": "string",
+                    "example": "M",
+                    "enum": [
+                        "M",
+                        "F"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "CreatePatientRequest": {
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "sex": {
+                    "type": "string",
+                    "example": "M",
+                    "enum": [
+                        "M",
+                        "F"
+                    ]
+                },
+                "external_source_id": {
+                    "type": "string",
+                    "description": "External id of patient in the soruce system"
+                }
+            },
+            "type": "object"
+        },
+        "CreateVisitResponse": {
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "QuestionIdentifier": {
+            "properties": {
+                "seed": {
+                    "type": "string",
+                    "example": "d94Jv39"
+                }
+            },
+            "type": "object"
+        },
+        "GetQuestionResponse": {
+            "properties": {
+                "question": {
+                    "$ref": "#/definitions/Question"
+                },
+                "current_index": {
+                    "type": "integer",
+                    "description": "current question index, used for progress indication"
+                },
+                "total_questions": {
+                    "type": "integer",
+                    "description": "estimated total number of questions, used for progress indication"
+                }
+            },
+            "type": "object"
+        },
+        "Question": {
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "answers": {
+                    "type": "object",
+                    "x-sl-internally-excluded": true,
+                    "x-sl-error-message": "You do not have permission to view this reference"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "single answer",
+                    "enum": [
+                        "single answer",
+                        "checklist",
+                        "checklist",
+                        "duration",
+                        "open-text",
+                        "attachment",
+                        "polar",
+                        "scale",
+                        "numeric",
+                        "temprature",
+                        "blood-pressure",
+                        "pain-scale"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "AnswerQuestionRequest": {
+            "properties": {
+                "response": {
+                    "type": "object",
+                    "x-sl-internally-excluded": true,
+                    "x-sl-error-message": "You do not have permission to view this reference"
+                }
+            },
+            "type": "object"
+        },
+        "AnswerQuestionResponse": {
+            "properties": {
+                "seed": {
+                    "type": "string",
+                    "description": "a state string saving the current state of the questionnaire"
+                },
+                "next_question_seed": {
+                    "type": "string",
+                    "description": "the state of the next question, you will recive a new state object for any response sent"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        },
+        "ExpiredSignatureError": {}
+    },
+    "host": "env-name.diagnosticrobotics.com",
+    "schemes": [
+        "https"
+    ]
+}

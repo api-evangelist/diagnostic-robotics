@@ -1,0 +1,26 @@
+generated: '2026-08-12'
+method: searched
+source: public package registries + the Diagnostic Robotics GitHub organization + the developer portal
+package_count: 0
+packages: []
+note: >-
+  Diagnostic Robotics publishes NO client SDK in any language. Every integration example in the developer
+  portal is a raw curl call. No `type: SDKs` and no `type: Packages` pointer is wired in apis.yml, because
+  there is nothing to point at — recorded as an honest zero, not an unchecked field.
+registries_checked:
+- {registry: npm, query: 'diagnostic-robotics / diagnosticrobotics', result: no first-party package}
+- {registry: pypi, url: 'https://pypi.org/pypi/diagnostic-robotics/json', status: 404}
+- {registry: pypi, url: 'https://pypi.org/pypi/diagnosticrobotics/json', status: 404}
+- {registry: rubygems, query: diagnostic-robotics, result: empty}
+- {registry: crates.io, query: diagnostic-robotics, result: empty}
+- {registry: nuget, query: diagnostic-robotics, result: empty}
+- {registry: maven-central, query: diagnosticrobotics, result: empty}
+- {registry: packagist, query: diagnostic-robotics, result: no first-party package}
+source_repos_checked:
+- url: https://api.github.com/orgs/Diagnostic-Robotics
+  status: 200
+  public_repos: 1
+  detail: >-
+    The organization exists but its single public repository, Diagnostic-Robotics/dr-word-cloud, was last
+    updated 2021-04-29 and is unrelated to the APIs. No SDK, no CLI, no example client.
+checked: '2026-08-12'

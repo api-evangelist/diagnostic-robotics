@@ -42,5 +42,41 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Diagnostic Robotics is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/diagnostic-robotics_stock/
+Diagnostic Robotics is a clinical AI company (Tel Aviv / Boston) whose platform turns medical claims, EHR
+and FHIR data into predictive risk stratification, actionable care next steps, HCC/RAF risk-adjustment gap
+closure and automated care operations for health plans, providers and care organizations.
+
+- Website: https://diagnosticrobotics.com/
+- Developer portal: https://docs.diagnosticrobotics.com/
+- Trust center: https://diagnosticrobotics.com/about/trust-center
+- Status page: https://diagnosticrobotics.statuspage.io
+
+## APIs profiled
+
+| API | Spec | Ops | Auth |
+|---|---|---|---|
+| Precision Population Health (Proactive Patient Risk Feed) | OpenAPI 3.0.2 | 15 | OAuth 2.0 client credentials |
+| Patient Questionnaire | Swagger 2.0 | 13 | `x-client` API key |
+| Symptom Search Service | Swagger 2.0 | 2 | `x-client` API key |
+
+All three contracts were harvested from the company's public Stoplight workspace (`wk:2242`,
+`docs.diagnosticrobotics.com`) and are stored verbatim in `openapi/_original/`.
+
+## What this profile records
+
+- `openapi/` - three harvested contracts plus verbatim originals
+- `authentication/`, `scopes/` - OAuth 2.0 + API key profile; zero scopes exist, and the declared Auth0 tenant no longer resolves
+- `conventions/`, `errors/`, `data-model/`, `lifecycle/`, `conformance/` - derived runtime semantics, error envelope, entity graph, versioning and standards posture
+- `sandbox/` - live Stoplight Prism mock servers, the only way to exercise this API without a contract
+- `components/` - the four iframe widget surfaces
+- `security/`, `well-known/` - domain security probe, trust center, and a recorded absence of every `/.well-known/` document
+- `plans/`, `rate-limits/`, `packages/` - honest zeros, each with the URLs that were checked
+- `skills/`, `llms/`, `overlays/`, `mcp/` - generated agent-facing artifacts grounded in real operationIds
+
+## Notable findings
+
+- The API host answers **HTTP 200 with a React SPA shell for every `/.well-known/` path** and for `/openapi.json`. Those 200s are not documents and are recorded as misses.
+- The published OpenAPI's `authorizationCode` flow points at `digital-outreach.us.auth0.com`, a tenant that returns `404 Unknown host`.
+- The Statuspage tenant is live but `updated_at` is 2020-06-29 and the indicator has read "Partial System Outage" ever since.
+- Both questionnaire specs publish the literal placeholder host `env-name.diagnosticrobotics.com`.
+- No idempotency contract, no documented rate limit, no `429`, no SDK, no pricing.

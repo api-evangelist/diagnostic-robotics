@@ -1,0 +1,27 @@
+generated: '2026-08-12'
+method: searched
+source: https://diagnosticrobotics.com/
+plan_count: 0
+plans: []
+model: enterprise-contract
+note: >-
+  Diagnostic Robotics publishes no pricing page, no plan tiers and no rate card. The marketing site has no
+  /pricing route and no pricing entry in its sitemap; every commercial path on the site funnels to a single
+  "Contact Us" form. The developer portal likewise documents no plans, quotas or entitlements - credentials are
+  issued per customer as part of an enterprise agreement, and the integration blueprint in the docs begins at
+  "Stage 1 - Receive credentials". Recorded as a real zero, not a harvesting gap.
+searched:
+  pages_checked:
+  - url: https://diagnosticrobotics.com/
+    status: 200
+    result: no pricing link in navigation or footer
+  - url: https://diagnosticrobotics.com/sitemap.xml
+    status: 200
+    result: 14 URLs, none pricing-related
+  - url: https://diagnosticrobotics.com/contact
+    status: 200
+    result: contact form only
+  - url: https://docs.diagnosticrobotics.com/
+    status: 200
+    result: no plans, quotas or entitlements documented
+  checked: '2026-08-12'

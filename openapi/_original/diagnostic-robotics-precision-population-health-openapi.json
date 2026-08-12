@@ -1,0 +1,2053 @@
+{
+    "openapi": "3.0.2",
+    "x-stoplight": {
+        "id": "usgko1x40nf1c"
+    },
+    "info": {
+        "title": "Diagnostic Robotics API",
+        "version": "2.3.35"
+    },
+    "servers": [
+        {
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com",
+            "description": "Sandbox"
+        }
+    ],
+    "paths": {
+        "/api/v1/dataset/{dataset_type}/upload": {
+            "post": {
+                "tags": [
+                    "Dataset Upload API"
+                ],
+                "summary": "Upload",
+                "operationId": "upload_api_v1_dataset__dataset_type__upload_post",
+                "parameters": [
+                    {
+                        "description": "Uploaded dataset type.",
+                        "required": true,
+                        "schema": {
+                            "title": "Dataset Type",
+                            "type": "string",
+                            "description": "Uploaded dataset type."
+                        },
+                        "name": "dataset_type",
+                        "in": "path"
+                    },
+                    {
+                        "description": "YYYY-MM-DD format. e.g 2022-11-01.",
+                        "required": true,
+                        "schema": {
+                            "title": "Updated For",
+                            "type": "string",
+                            "description": "YYYY-MM-DD format. e.g 2022-11-01."
+                        },
+                        "name": "updated_for",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Uploaded dataset file type.",
+                        "required": false,
+                        "schema": {
+                            "title": "Format",
+                            "type": "string",
+                            "description": "Uploaded dataset file type.",
+                            "default": "CSV"
+                        },
+                        "name": "format",
+                        "in": "query"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_api_v1_dataset__dataset_type__upload_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "gwt2ghnrxf283"
+                }
+            }
+        },
+        "/api/oauth/token": {
+            "post": {
+                "tags": [
+                    "API Auth"
+                ],
+                "summary": "Login For Access Token",
+                "operationId": "login_for_access_token_api_oauth_token_post",
+                "requestBody": {
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_login_for_access_token_api_oauth_token_post"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-stoplight": {
+                    "id": "nelm99m844td2"
+                }
+            }
+        },
+        "/api/v2/RiskAdjustmentProfile/{patientId}/diagnoses": {
+            "patch": {
+                "tags": [
+                    "Risk Adjustment Profile"
+                ],
+                "summary": "Update Diagnoses",
+                "operationId": "update_diagnoses_api_v2_RiskAdjustmentProfile__patientId__diagnoses_patch",
+                "security": [
+                    {
+                        "OAuth2AuthorizationCodeBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "patientId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "description": "Patient Id",
+                            "type": "string"
+                        },
+                        "description": "Patient Id",
+                        "example": "MX3DJ9VV"
+                    },
+                    {
+                        "name": "icd_codes",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "title": "Icd Codes",
+                            "description": "Update by one or more icd codes",
+                            "required": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "description": "Update by one or more icd codes"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDiagnosesPayload"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-stoplight": {
+                    "id": "o83dddrmidk75"
+                }
+            }
+        },
+        "/api/v2/RiskAdjustmentProfile/{patientId}": {
+            "get": {
+                "tags": [
+                    "Risk Adjustment Profile"
+                ],
+                "summary": "Get Patient Raf Gaps Data By Patient Id",
+                "description": "Get risk adjustment profile for a patient",
+                "operationId": "get_patient_raf_gaps_data_by_patient_id_api_v2_RiskAdjustmentProfile__patientId__get",
+                "parameters": [
+                    {
+                        "description": "Patient Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient Id"
+                        },
+                        "example": "MX3DJ9VV",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientRiskAdjustmentProfileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2AuthorizationCodeBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "h5oyykkh018wj"
+                }
+            }
+        },
+        "/api/v2/RiskList": {
+            "get": {
+                "tags": [
+                    "Risk List API"
+                ],
+                "summary": "Search Risk Lists",
+                "description": "Search available risk lists",
+                "operationId": "search_risk_lists_api_v2_RiskList_get",
+                "parameters": [
+                    {
+                        "description": "filter by product type",
+                        "required": false,
+                        "schema": {
+                            "title": "Product",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "filter by product type"
+                        },
+                        "name": "product",
+                        "in": "query"
+                    },
+                    {
+                        "description": "filter by population",
+                        "required": false,
+                        "schema": {
+                            "title": "Population",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "filter by population"
+                        },
+                        "name": "population",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "title": "Response Search Risk Lists Api V2 Risklist Get",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/RiskListMetadata"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "7zsv6xf0ln7qk"
+                }
+            }
+        },
+        "/api/v2/RiskList/{id}": {
+            "get": {
+                "tags": [
+                    "Risk List API"
+                ],
+                "summary": "Get Risk List",
+                "description": "Get risk list",
+                "operationId": "get_risk_list_api_v2_RiskList__id__get",
+                "parameters": [
+                    {
+                        "description": "risk list",
+                        "required": true,
+                        "schema": {
+                            "title": "Id",
+                            "type": "string",
+                            "description": "risk list"
+                        },
+                        "example": "a773fc5b078a4070a20122d7a2409d94",
+                        "name": "id",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Offset",
+                        "required": false,
+                        "schema": {
+                            "title": "Offset",
+                            "type": "integer",
+                            "description": "Offset"
+                        },
+                        "name": "offset",
+                        "in": "query"
+                    },
+                    {
+                        "description": "Limit",
+                        "required": false,
+                        "schema": {
+                            "title": "Limit",
+                            "type": "integer",
+                            "description": "Limit"
+                        },
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RiskList"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "2b5cepcllvqd8"
+                }
+            }
+        },
+        "/api/v2/RiskList/{id}/$export": {
+            "get": {
+                "tags": [
+                    "Risk List API"
+                ],
+                "summary": "Export Risk List",
+                "description": "Export risk list",
+                "operationId": "export_risk_list_api_v2_RiskList__id___export_get",
+                "parameters": [
+                    {
+                        "description": "risk list",
+                        "required": true,
+                        "schema": {
+                            "title": "Id",
+                            "type": "string",
+                            "description": "risk list"
+                        },
+                        "example": "a773fc5b078a4070a20122d7a2409d94",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Risk list File",
+                        "content": {
+                            "application/x-ndjson": {}
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "p89zz0jysuu25"
+                }
+            }
+        },
+        "/api/v2/RiskProfile/{patientId}": {
+            "get": {
+                "tags": [
+                    "Risk Profile"
+                ],
+                "summary": "Get Risk Profile",
+                "description": "Get risk profile data",
+                "operationId": "get_risk_profile_api_v2_RiskProfile__patientId__get",
+                "parameters": [
+                    {
+                        "description": "Patient Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient Id"
+                        },
+                        "example": "MX3DJ9VV",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RiskProfile"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "ms14m9mthq2jc"
+                }
+            }
+        },
+        "/api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$update": {
+            "post": {
+                "tags": [
+                    "Risk Profile"
+                ],
+                "summary": "Update Next Step",
+                "description": "Update Next Step status.",
+                "operationId": "update_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___update_post",
+                "parameters": [
+                    {
+                        "description": "Patient Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient Id"
+                        },
+                        "example": "MX3DJ9VV",
+                        "name": "patientId",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Next Step Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Nextstepid",
+                            "type": "string",
+                            "description": "Next Step Id"
+                        },
+                        "example": "pcp_assign",
+                        "name": "nextStepId",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Payload",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/TaskUpdatePayload"
+                                    }
+                                ],
+                                "description": "Task update payload"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "9qvihcr49xdal"
+                }
+            }
+        },
+        "/api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$ignore": {
+            "post": {
+                "tags": [
+                    "Risk Profile"
+                ],
+                "summary": "Ignore Next Step",
+                "description": "Ignore Next Step.",
+                "operationId": "ignore_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___ignore_post",
+                "parameters": [
+                    {
+                        "description": "Patient Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient Id"
+                        },
+                        "example": "a773fc5b078a4070a20122d7a2409d94",
+                        "name": "patientId",
+                        "in": "path"
+                    },
+                    {
+                        "description": "Next Step Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Nextstepid",
+                            "type": "string",
+                            "description": "Next Step Id"
+                        },
+                        "example": "pcp_assign",
+                        "name": "nextStepId",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "title": "Payload",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/TaskIgnorePayload"
+                                    }
+                                ],
+                                "description": "Task ignore payload"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "rfxhtwurjnrqh"
+                }
+            }
+        },
+        "/api/v2/PatientProfile/{patientId}": {
+            "get": {
+                "tags": [
+                    "Patient Profile"
+                ],
+                "summary": "Get Patient Profile",
+                "description": "Get patient profile data",
+                "operationId": "get_patient_profile_api_v2_PatientProfile__patientId__get",
+                "parameters": [
+                    {
+                        "description": "Patient Id",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient Id"
+                        },
+                        "example": "MX938DJ8",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientProfile"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "s4g1mu2oona9d"
+                }
+            }
+        },
+        "/api/v2/RiskList/{id}/_widget": {
+            "get": {
+                "tags": [
+                    "Widgets API"
+                ],
+                "summary": "Get Risk List Widget",
+                "description": "Get risk list widget",
+                "operationId": "get_risk_list_widget_api_v2_RiskList__id___widget_get",
+                "parameters": [
+                    {
+                        "description": "Risk list id.",
+                        "required": true,
+                        "schema": {
+                            "title": "Id",
+                            "type": "string",
+                            "description": "Risk list id."
+                        },
+                        "example": "a773fc5b078a4070a20122d7a2409d94",
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "widget location",
+                        "headers": {
+                            "Location": {
+                                "description": "Widget URL",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "tjr35piq4va7q"
+                }
+            }
+        },
+        "/api/v2/RiskProfile/{patientId}/_widget": {
+            "get": {
+                "tags": [
+                    "Widgets API"
+                ],
+                "summary": "Get Risk Profile Widget",
+                "description": "Get risk profile widget.",
+                "operationId": "get_risk_profile_widget_api_v2_RiskProfile__patientId___widget_get",
+                "parameters": [
+                    {
+                        "description": "Patient id.",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient id."
+                        },
+                        "example": "MX938DJ8",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "widget location",
+                        "headers": {
+                            "Location": {
+                                "description": "Widget URL",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "gowwli7f7ppo5"
+                }
+            }
+        },
+        "/api/v2/PatientProfile/{patientId}/_widget": {
+            "get": {
+                "tags": [
+                    "Widgets API"
+                ],
+                "summary": "Get Patient Profile Widget",
+                "description": "Get patient profile widget.",
+                "operationId": "get_patient_profile_widget_api_v2_PatientProfile__patientId___widget_get",
+                "parameters": [
+                    {
+                        "description": "Patient id.",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient id."
+                        },
+                        "example": "MX938DJ8",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "widget location",
+                        "headers": {
+                            "Location": {
+                                "description": "Widget URL",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "0e8c7thqeqaqo"
+                }
+            }
+        },
+        "/api/v2/RiskAdjustmentProfile/{patientId}/_widget": {
+            "get": {
+                "tags": [
+                    "Widgets API"
+                ],
+                "summary": "Get Patient Risk Adjustment Profile Widget",
+                "description": "Get Risk Adjustment profile widget.",
+                "operationId": "get_patient_risk_adjustment_profile_widget_api_v2_RiskAdjustmentProfile__patientId___widget_get",
+                "parameters": [
+                    {
+                        "description": "Patient id.",
+                        "required": true,
+                        "schema": {
+                            "title": "Patientid",
+                            "type": "string",
+                            "description": "Patient id."
+                        },
+                        "example": "MX938DJ8",
+                        "name": "patientId",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "widget location",
+                        "headers": {
+                            "Location": {
+                                "description": "Widget URL",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "x-stoplight": {
+                    "id": "mfjxc27be4q5d"
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_login_for_access_token_api_oauth_token_post": {
+                "title": "Body_login_for_access_token_api_oauth_token_post",
+                "required": [
+                    "client_id",
+                    "client_secret"
+                ],
+                "type": "object",
+                "properties": {
+                    "grant_type": {
+                        "title": "Grant Type",
+                        "type": "string"
+                    },
+                    "scope": {
+                        "title": "Scope",
+                        "type": "string",
+                        "default": ""
+                    },
+                    "client_id": {
+                        "title": "Client Id",
+                        "type": "string"
+                    },
+                    "client_secret": {
+                        "title": "Client Secret",
+                        "type": "string"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "x326lqe0ar1sb"
+                }
+            },
+            "Body_upload_api_v1_dataset__dataset_type__upload_post": {
+                "title": "Body_upload_api_v1_dataset__dataset_type__upload_post",
+                "required": [
+                    "file"
+                ],
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "title": "File",
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "vx4sbohvbgo19"
+                }
+            },
+            "CodedPatientIcdResponse": {
+                "title": "CodedPatientIcdResponse",
+                "required": [
+                    "code",
+                    "description",
+                    "documentedDate",
+                    "providerNpiId"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "string",
+                        "description": "ICD code.",
+                        "example": "F01"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string",
+                        "description": "ICD description.",
+                        "example": "Vascular dementia"
+                    },
+                    "documentedDate": {
+                        "title": "Documenteddate",
+                        "type": "string",
+                        "description": "Documented date.",
+                        "format": "date",
+                        "example": "2021-01-01"
+                    },
+                    "providerNpiId": {
+                        "title": "Providernpiid",
+                        "type": "string",
+                        "description": "Provider NPI ID.",
+                        "example": "1234567890"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "qj2ie9pj8l3o8"
+                }
+            },
+            "ContributingFactor": {
+                "title": "ContributingFactor",
+                "enum": [
+                    "Major",
+                    "Moderate",
+                    "Minor"
+                ],
+                "description": "An enumeration.",
+                "x-stoplight": {
+                    "id": "cohyoe78gl9p5"
+                }
+            },
+            "Driver": {
+                "title": "Driver",
+                "required": [
+                    "id",
+                    "displayText",
+                    "category",
+                    "contributingFactor",
+                    "categoryDisplayText"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string",
+                        "example": "male_afib_chadsvasc_high_risk_no_anti_coag"
+                    },
+                    "displayText": {
+                        "title": "Displaytext",
+                        "type": "string",
+                        "example": "Male with atrial fibrillation and CHA2DS2VASc score of 2 or more without anticoagulation medication"
+                    },
+                    "category": {
+                        "title": "Category",
+                        "type": "string",
+                        "example": "missing_treatment"
+                    },
+                    "contributingFactor": {
+                        "$ref": "#/components/schemas/ContributingFactor"
+                    },
+                    "count": {
+                        "title": "Count",
+                        "type": "integer"
+                    },
+                    "categoryDisplayText": {
+                        "title": "Categorydisplaytext",
+                        "type": "string",
+                        "example": "Missing treatment"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "uhplw6a9quiz6"
+                }
+            },
+            "HTTPValidationError": {
+                "title": "HTTPValidationError",
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "title": "Detail",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        }
+                    }
+                },
+                "x-stoplight": {
+                    "id": "5bljvia36thct"
+                }
+            },
+            "Meta": {
+                "title": "Meta",
+                "required": [
+                    "lastUpdated"
+                ],
+                "type": "object",
+                "properties": {
+                    "lastUpdated": {
+                        "title": "Lastupdated",
+                        "type": "string",
+                        "description": "When the resource version last changed.",
+                        "format": "date",
+                        "example": "2021-01-01"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "zeujhv44clhhb"
+                }
+            },
+            "NextStep": {
+                "title": "NextStep",
+                "required": [
+                    "id",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string",
+                        "description": "Unique identifier for the next step.",
+                        "example": "review_medication"
+                    },
+                    "displayText": {
+                        "title": "Displaytext",
+                        "type": "string",
+                        "description": "Next step description.",
+                        "default": "",
+                        "example": "Refer to clinical pharmacologist consult or to PCP to review medications"
+                    },
+                    "contributingDrivers": {
+                        "title": "Contributingdrivers",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": [],
+                        "example": [
+                            "binary_diabetes_comorbidity_neurological_ever",
+                            "symptomatic_heart_failure"
+                        ]
+                    },
+                    "reference": {
+                        "title": "Reference",
+                        "type": "string",
+                        "description": "Reference in clinical literature for the suggested next step."
+                    },
+                    "owner": {
+                        "title": "Owner",
+                        "type": "string",
+                        "example": "Care Coordinator"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/NextStepStatus"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "yinjibtw2zmy4"
+                }
+            },
+            "NextStepStatus": {
+                "title": "NextStepStatus",
+                "enum": [
+                    "suggested",
+                    "ignored",
+                    "accepted",
+                    "rejected",
+                    "cancelled",
+                    "on-hold",
+                    "failed",
+                    "in-progress",
+                    "completed"
+                ],
+                "description": "An enumeration.",
+                "x-stoplight": {
+                    "id": "gc9wb3hs3u0k4"
+                }
+            },
+            "PatientDetails": {
+                "title": "PatientDetails",
+                "required": [
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string",
+                        "description": "Unique identifier for the risk list.",
+                        "example": "MX938DJ8"
+                    },
+                    "firstName": {
+                        "title": "Firstname",
+                        "type": "string",
+                        "description": "First Name.",
+                        "example": "William"
+                    },
+                    "middleName": {
+                        "title": "Middlename",
+                        "type": "string",
+                        "description": "Middle Name.",
+                        "example": "Henry"
+                    },
+                    "lastName": {
+                        "title": "Lastname",
+                        "type": "string",
+                        "description": "Last Name.",
+                        "example": "Turner"
+                    },
+                    "dob": {
+                        "title": "Dob",
+                        "type": "string",
+                        "description": "Date of birth.",
+                        "format": "date",
+                        "example": "1955-01-01"
+                    },
+                    "state": {
+                        "title": "State",
+                        "type": "string",
+                        "description": "State.",
+                        "example": "CA"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "fqzi39kpbahnl"
+                }
+            },
+            "PatientHccRecommendationResponse": {
+                "title": "PatientHccRecommendationResponse",
+                "required": [
+                    "code",
+                    "value",
+                    "description",
+                    "version",
+                    "diagnoses",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "string",
+                        "description": "HCC code.",
+                        "example": "HCC51"
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "number",
+                        "description": "HCC value.",
+                        "example": 0.346
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string",
+                        "description": "HCC description.",
+                        "example": "Dementia with Complications"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "HCC version.",
+                        "example": "V24"
+                    },
+                    "diagnoses": {
+                        "title": "Diagnoses",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PatientIcdSuggestionResponse"
+                        },
+                        "description": "ICD codes for the HCC."
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status"
+                            }
+                        ],
+                        "description": "Status of the HCC suggestion."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "z4nifw5dt46wx"
+                }
+            },
+            "PatientHccResponse": {
+                "title": "PatientHccResponse",
+                "required": [
+                    "code",
+                    "value",
+                    "description",
+                    "version",
+                    "diagnoses"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "string",
+                        "description": "HCC code.",
+                        "example": "HCC51"
+                    },
+                    "value": {
+                        "title": "Value",
+                        "type": "number",
+                        "description": "HCC value.",
+                        "example": 0.346
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string",
+                        "description": "HCC description.",
+                        "example": "Dementia with Complications"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "type": "string",
+                        "description": "HCC version.",
+                        "example": "V24"
+                    },
+                    "diagnoses": {
+                        "title": "Diagnoses",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CodedPatientIcdResponse"
+                        },
+                        "description": "ICD codes for the HCC."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "flg1u3uh1y43h"
+                }
+            },
+            "PatientIcdSuggestionResponse": {
+                "title": "PatientIcdSuggestionResponse",
+                "required": [
+                    "code",
+                    "description",
+                    "status",
+                    "reason"
+                ],
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "title": "Code",
+                        "type": "string",
+                        "description": "ICD code.",
+                        "example": "F01"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "type": "string",
+                        "description": "ICD description.",
+                        "example": "Vascular dementia"
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status"
+                            }
+                        ],
+                        "description": "Status of the ICD code."
+                    },
+                    "reason": {
+                        "title": "Reason",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Reason"
+                        },
+                        "description": "Reason for the suggestion."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "jv4x9ijca1cap"
+                }
+            },
+            "PatientInformationSection": {
+                "title": "PatientInformationSection",
+                "required": [
+                    "sectionHeader",
+                    "sectionBody"
+                ],
+                "type": "object",
+                "properties": {
+                    "sectionHeader": {
+                        "title": "Sectionheader",
+                        "type": "string",
+                        "description": "Section header.",
+                        "example": "Demographics"
+                    },
+                    "sectionBody": {
+                        "title": "Sectionbody",
+                        "type": "string",
+                        "description": "Section body text in Markdown format.",
+                        "example": "Age: 65\nGender: Male\nRace: White"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "2e0sm7kfzwetc"
+                }
+            },
+            "PatientProfile": {
+                "title": "PatientProfile",
+                "required": [
+                    "patientId",
+                    "updateDate",
+                    "patient",
+                    "sections"
+                ],
+                "type": "object",
+                "properties": {
+                    "patientId": {
+                        "title": "Patientid",
+                        "type": "string",
+                        "description": "Unique identifier of the patient .",
+                        "example": "MX938DJ8"
+                    },
+                    "updateDate": {
+                        "title": "Updatedate",
+                        "type": "string",
+                        "description": "The date when the patient information was last updated.",
+                        "format": "date"
+                    },
+                    "patient": {
+                        "title": "Patient",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PatientDetails"
+                            }
+                        ],
+                        "description": "Patient details."
+                    },
+                    "sections": {
+                        "title": "Sections",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PatientInformationSection"
+                        },
+                        "description": "List of patient information sections."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "pzgj9u62xcj3b"
+                }
+            },
+            "PatientRiskAdjustmentProfileResponse": {
+                "title": "PatientRiskAdjustmentProfileResponse",
+                "required": [
+                    "patient",
+                    "codedRiskScore",
+                    "uncodedRiskScore",
+                    "codedConditions",
+                    "uncodedConditions",
+                    "meta"
+                ],
+                "type": "object",
+                "properties": {
+                    "patient": {
+                        "title": "Patient",
+                        "type": "string",
+                        "description": "Unique identifier of the patient.",
+                        "example": "MX938DJ8"
+                    },
+                    "codedRiskScore": {
+                        "title": "Codedriskscore",
+                        "type": "number",
+                        "description": "HCC Risk score of the patient.",
+                        "example": 1.8
+                    },
+                    "uncodedRiskScore": {
+                        "title": "Uncodedriskscore",
+                        "type": "number",
+                        "description": "Uncoded HCC Risk score gap of the patient.",
+                        "example": 0.3
+                    },
+                    "codedConditions": {
+                        "title": "Codedconditions",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PatientHccResponse"
+                        },
+                        "description": "Coded diagnoses for the patient."
+                    },
+                    "uncodedConditions": {
+                        "title": "Uncodedconditions",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PatientHccRecommendationResponse"
+                        },
+                        "description": "Suggested diagnoses for the patient."
+                    },
+                    "meta": {
+                        "title": "Meta",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Meta"
+                            }
+                        ],
+                        "description": "The metadata about the resource."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "9kz3cpfom4z2p"
+                }
+            },
+            "Reason": {
+                "title": "Reason",
+                "required": [
+                    "source",
+                    "reason",
+                    "evidence"
+                ],
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "title": "Source",
+                        "type": "string",
+                        "description": "Source of recommendation.",
+                        "example": "Claims"
+                    },
+                    "reason": {
+                        "title": "Reason",
+                        "type": "string",
+                        "description": "Reason for the recommendation.",
+                        "example": "Coded in previous year"
+                    },
+                    "evidence": {
+                        "title": "Evidence",
+                        "type": "string",
+                        "description": "Evidence for the recommendation.",
+                        "example": "Emmett L Brown, MD\n Coded 10/31/2015"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "77jtczugyjim0"
+                }
+            },
+            "RiskList": {
+                "title": "RiskList",
+                "required": [
+                    "metadata",
+                    "total",
+                    "offset",
+                    "entities"
+                ],
+                "type": "object",
+                "properties": {
+                    "metadata": {
+                        "title": "Metadata",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/RiskListMetadata"
+                            }
+                        ],
+                        "description": "Risk list metadata."
+                    },
+                    "total": {
+                        "title": "Total",
+                        "type": "integer",
+                        "description": "Size",
+                        "example": 34
+                    },
+                    "offset": {
+                        "title": "Offset",
+                        "type": "integer",
+                        "description": "Size",
+                        "example": 0
+                    },
+                    "entities": {
+                        "title": "Entities",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RiskListPatientItem"
+                        },
+                        "description": "List of patients in the risk list."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "e3wu3wiwz456y"
+                }
+            },
+            "RiskListMetadata": {
+                "title": "RiskListMetadata",
+                "required": [
+                    "id",
+                    "updateDate",
+                    "serveDate",
+                    "population",
+                    "product",
+                    "url"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "title": "Id",
+                        "type": "string",
+                        "description": "Unique identifier for the risk list.",
+                        "example": "a773fc5b078a4070a20122d7a2409d94"
+                    },
+                    "updateDate": {
+                        "title": "Updatedate",
+                        "type": "string",
+                        "description": "The date when the risk list was last updated.",
+                        "format": "date"
+                    },
+                    "serveDate": {
+                        "title": "Servedate",
+                        "type": "string",
+                        "description": "The data cutoff date.",
+                        "format": "date"
+                    },
+                    "population": {
+                        "title": "Population",
+                        "type": "string",
+                        "description": "Population of the list.",
+                        "example": "DCE"
+                    },
+                    "product": {
+                        "title": "Product",
+                        "type": "string",
+                        "description": "Risk list Product.",
+                        "example": "PREVENTABLE"
+                    },
+                    "url": {
+                        "title": "Url",
+                        "type": "string",
+                        "description": "Risk list location.",
+                        "example": "api/v2/RiskList/a773fc5b078a4070a20122d7a2409d94"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "cracaemvdsqjf"
+                }
+            },
+            "RiskListPatientItem": {
+                "title": "RiskListPatientItem",
+                "required": [
+                    "patientId",
+                    "patient",
+                    "riskScore",
+                    "riskProfileUrl",
+                    "patientProfileUrl"
+                ],
+                "type": "object",
+                "properties": {
+                    "patientId": {
+                        "title": "Patientid",
+                        "type": "string",
+                        "description": "Unique identifier for the patient.",
+                        "example": "MX938DJ8"
+                    },
+                    "patient": {
+                        "title": "Patient",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PatientDetails"
+                            }
+                        ],
+                        "description": "Patient details."
+                    },
+                    "riskScore": {
+                        "title": "Riskscore",
+                        "type": "number",
+                        "description": "Risk score.",
+                        "example": 97.6
+                    },
+                    "riskProfileUrl": {
+                        "title": "Riskprofileurl",
+                        "type": "string",
+                        "description": "Location of the patient risk profile.",
+                        "example": "api/v2/RiskProfile/MX938DJ8"
+                    },
+                    "patientProfileUrl": {
+                        "title": "Patientprofileurl",
+                        "type": "string",
+                        "description": "Location of the patient profile.",
+                        "example": "api/v2/PatientProfile/MX938DJ8"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "rans8hib5imnv"
+                }
+            },
+            "RiskProfile": {
+                "title": "RiskProfile",
+                "type": "object",
+                "x-stoplight": {
+                    "id": "j6wpjheq262j5"
+                },
+                "required": [
+                    "patientId",
+                    "updateDate",
+                    "patient",
+                    "nextSteps",
+                    "drivers",
+                    "riskScore"
+                ],
+                "properties": {
+                    "patientId": {
+                        "title": "Patientid",
+                        "type": "string",
+                        "description": "Unique identifier of the patient .",
+                        "example": "MX938DJ8"
+                    },
+                    "updateDate": {
+                        "title": "Updatedate",
+                        "type": "string",
+                        "description": "The date when the risk list was last updated.",
+                        "format": "date"
+                    },
+                    "patient": {
+                        "title": "Patient",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/PatientDetails"
+                            }
+                        ],
+                        "description": "Patient details."
+                    },
+                    "nextSteps": {
+                        "title": "Nextsteps",
+                        "type": "array",
+                        "description": "Prioritized list of next steps.",
+                        "items": {
+                            "$ref": "#/components/schemas/NextStep"
+                        }
+                    },
+                    "drivers": {
+                        "title": "Drivers",
+                        "type": "array",
+                        "description": "Prioritized list of drivers.",
+                        "items": {
+                            "$ref": "#/components/schemas/Driver"
+                        }
+                    },
+                    "riskScore": {
+                        "type": "number",
+                        "x-stoplight": {
+                            "id": "gcgp1lw0r9qv5"
+                        },
+                        "format": "float",
+                        "example": 99.99,
+                        "description": "The patient's overall health risk score."
+                    }
+                }
+            },
+            "Status": {
+                "title": "Status",
+                "enum": [
+                    "Accepted",
+                    "Discarded",
+                    "Pending",
+                    "Open"
+                ],
+                "type": "string",
+                "description": "An enumeration.",
+                "x-stoplight": {
+                    "id": "l0dgk8wx8e14d"
+                }
+            },
+            "TaskIgnorePayload": {
+                "title": "TaskIgnorePayload",
+                "required": [
+                    "reason",
+                    "duration"
+                ],
+                "type": "object",
+                "properties": {
+                    "reason": {
+                        "title": "Reason",
+                        "type": "string",
+                        "description": "Reason for ignoring next step.",
+                        "example": "Patient is not eligible for this intervention."
+                    },
+                    "duration": {
+                        "title": "Duration",
+                        "type": "integer",
+                        "description": "Duration to ignore next step in days.",
+                        "example": 90
+                    }
+                },
+                "x-stoplight": {
+                    "id": "ew0071jji1xp3"
+                }
+            },
+            "TaskUpdatePayload": {
+                "title": "TaskUpdatePayload",
+                "required": [
+                    "note",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "note": {
+                        "title": "Note",
+                        "type": "string",
+                        "description": "Note for updating next step.",
+                        "example": "Patient has been assigned to PCP."
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/NextStepStatus"
+                            }
+                        ],
+                        "description": "Status of next step.",
+                        "example": "in-progress"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "mq8peq141w8in"
+                }
+            },
+            "TokenResponse": {
+                "title": "TokenResponse",
+                "required": [
+                    "access_token",
+                    "token_type"
+                ],
+                "type": "object",
+                "properties": {
+                    "access_token": {
+                        "title": "Access Token",
+                        "type": "string"
+                    },
+                    "token_type": {
+                        "title": "Token Type",
+                        "type": "string"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "tlvdujnigq33o"
+                }
+            },
+            "UpdateDiagnosesPayload": {
+                "title": "UpdateDiagnosesPayload",
+                "required": [
+                    "diagnoses"
+                ],
+                "type": "object",
+                "properties": {
+                    "diagnoses": {
+                        "title": "Diagnoses",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UpdateIcdPayload"
+                        },
+                        "description": "List of diagnoses to update."
+                    }
+                },
+                "x-stoplight": {
+                    "id": "6ogt2atcsn0j2"
+                }
+            },
+            "UpdateIcdPayload": {
+                "title": "UpdateIcdPayload",
+                "required": [
+                    "icdCode",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "icdCode": {
+                        "title": "Icdcode",
+                        "type": "string",
+                        "description": "ICD code.",
+                        "example": "F01"
+                    },
+                    "status": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/Status"
+                            }
+                        ],
+                        "description": "Status of the ICD code.",
+                        "example": "Accepted"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "stdop502wlz3z"
+                }
+            },
+            "ValidationError": {
+                "title": "ValidationError",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "loc": {
+                        "title": "Location",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    },
+                    "msg": {
+                        "title": "Message",
+                        "type": "string"
+                    },
+                    "type": {
+                        "title": "Error Type",
+                        "type": "string"
+                    }
+                },
+                "x-stoplight": {
+                    "id": "ch4ho5h51hq0x"
+                }
+            }
+        },
+        "securitySchemes": {
+            "OAuth2PasswordBearer": {
+                "type": "oauth2",
+                "flows": {
+                    "password": {
+                        "scopes": {},
+                        "tokenUrl": "/api/oauth/token"
+                    }
+                }
+            },
+            "OAuth2AuthorizationCodeBearer": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "scopes": {},
+                        "authorizationUrl": "https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier",
+                        "tokenUrl": "https://digital-outreach.us.auth0.com/oauth/token"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,100 @@
+swagger: '2.0'
+x-stoplight:
+  id: suy7vq94ei15e
+basePath: /api/search/
+paths:
+  /symptoms/autocomplete:
+    get:
+      responses:
+        '200':
+          description: Symptoms found
+          schema:
+            type: array
+            items:
+              type: string
+      description: autocomplete  search term for a prefix or partial term
+      operationId: get_symptom_search_autocomplete_resource
+      parameters:
+      - description: Search term for symptom search.
+        name: search_term
+        type: string
+        in: query
+      - description: Biological sex of the patient, required for demographic specific symptoms
+        name: sex
+        type: string
+        in: query
+      tags:
+      - default
+  /visits/{visit_id}/symptoms:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      type: string
+    get:
+      responses:
+        '200':
+          description: Symptoms found
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Symptom'
+      description: Search for symptoms by term
+      operationId: get_symptom_search_resource
+      parameters:
+      - description: Search term for symptom search
+        name: search_term
+        type: string
+        in: query
+      - description: Biological sex of the patient, required for demographic specific symptoms
+        name: sex
+        type: string
+        in: query
+      tags:
+      - Visits
+info:
+  title: Search Service
+  version: 0.0.1
+  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\
+    \nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire\
+    \ for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n\
+    \ 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+produces:
+- application/json
+consumes:
+- application/json
+securityDefinitions:
+  apikey:
+    type: apiKey
+    in: header
+    name: x-client
+    description: Client API key, provided by Diagnostic Robotics, must be supplied with any request
+security:
+- apikey: []
+tags:
+- name: default
+  description: Global
+- name: Visits
+definitions:
+  Symptom:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      medical_title:
+        type: string
+      title:
+        type: string
+    type: object
+responses:
+  ParseError:
+    description: When a mask can't be parsed
+  MaskError:
+    description: When any error occurs on mask
+  ExpiredSignatureError: {}
+host: env-name.diagnosticrobotics.com
+schemes:
+- https

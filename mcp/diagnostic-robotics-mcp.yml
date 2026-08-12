@@ -1,0 +1,83 @@
+generated: '2026-08-12'
+method: derived
+status: candidate
+source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+published_server: null
+searched:
+  official_server_found: false
+  note: >-
+    Diagnostic Robotics operates NO Model Context Protocol server. This file is a CANDIDATE tool shape derived
+    from the published OpenAPI so the agent surface can be reasoned about; it is not a server Diagnostic
+    Robotics runs. It deliberately carries NO `type: MCPServer` pointer in apis.yml — wiring one would credit
+    the company with an agent surface it does not operate.
+  probes:
+  - url: https://mcp.diagnosticrobotics.com
+    result: DNS does not resolve
+  - url: https://sandbox.precision-population-health.diagnosticrobotics.com/mcp
+    result: React SPA catch-all, not an MCP endpoint
+  - registry: npm (@modelcontextprotocol, diagnostic-robotics)
+    result: no first-party package
+  - source: https://docs.diagnosticrobotics.com/ (13 articles, 3 API projects)
+    result: no MCP, agent or LLM-tool documentation
+  checked: '2026-08-12'
+transport: null
+auth:
+  would_require: OAuth 2.0 bearer token from POST /api/oauth/token, per-customer subdomain
+  scopes: none exist — a token is a full tenant grant, so an MCP server fronting this API would need its own
+    consequence gating rather than delegating to OAuth scopes
+tools:
+- name: search_risk_lists
+  description: Find available risk lists filtered by product and population.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#search_risk_lists_api_v2_RiskList_get
+  action_class: read
+- name: get_risk_list
+  description: Read a ranked risk list with paging.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_list_api_v2_RiskList__id__get
+  action_class: read
+- name: export_risk_list
+  description: Export a full risk list as a file.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#export_risk_list_api_v2_RiskList__id___export_get
+  action_class: read
+- name: get_risk_profile
+  description: Read one patient's risk profile, drivers and recommended next steps.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_profile_api_v2_RiskProfile__patientId__get
+  action_class: read
+- name: get_patient_profile
+  description: Read one patient's demographic and clinical profile.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_patient_profile_api_v2_PatientProfile__patientId__get
+  action_class: read
+- name: get_risk_adjustment_profile
+  description: Read a patient's coded and uncoded HCC conditions and RAF gap data.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_patient_raf_gaps_data_by_patient_id_api_v2_RiskAdjustmentProfile__patientId__get
+  action_class: read
+- name: update_next_step
+  description: Advance the status of a recommended care next step.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#update_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___update_post
+  action_class: write
+  human_in_the_loop: recommended
+- name: ignore_next_step
+  description: Dismiss a recommended care next step.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#ignore_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___ignore_post
+  action_class: write
+  human_in_the_loop: recommended
+- name: update_diagnoses
+  description: Accept or reject suggested ICD/HCC diagnoses for a patient.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#update_diagnoses_api_v2_RiskAdjustmentProfile__patientId__diagnoses_patch
+  action_class: write
+  consequence: regulated — feeds risk-adjustment submissions
+  human_in_the_loop: required
+- name: upload_dataset
+  description: Upload a FHIR / CCLF / CSV / Parquet claims or EHR dataset.
+  source_operation: openapi/diagnostic-robotics-precision-population-health-openapi.yml#upload_api_v1_dataset__dataset_type__upload_post
+  action_class: write
+  consequence: bulk PHI ingestion
+  human_in_the_loop: required
+excluded_from_candidate:
+- operation: login_for_access_token_api_oauth_token_post
+  reason: credential exchange belongs in the server's transport layer, never as an agent-callable tool
+- operations: the four *_widget operations
+  reason: they return short-lived signed embed URLs meant for a browser iframe, not agent-consumable data
+phi_warning: >-
+  Every read tool above returns protected health information — patient names, dates of birth, state, ICD/HCC
+  diagnoses and risk scores. Any real MCP deployment fronting this API needs PHI handling, a BAA and audit
+  logging before it is exposed to a general-purpose agent.

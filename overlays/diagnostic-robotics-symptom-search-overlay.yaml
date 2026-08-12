@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Diagnostic Robotics Symptom Search Service
+  version: 1.0.0
+x-generated: '2026-08-12'
+x-method: generated
+x-source: openapi/diagnostic-robotics-symptom-search-openapi.yml
+extends: openapi/diagnostic-robotics-symptom-search-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-harvested: '2026-08-12'
+    x-apievangelist-source: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+    x-apievangelist-spec-format: Swagger 2.0
+    x-apievangelist-companion: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+- target: $.paths['/symptoms/autocomplete'].get
+  update:
+    x-apievangelist-usage: >-
+      Step 3 of the triage flow - resolve free-text patient input to a symptom id before attaching it to a visit
+      with post_symptoms_resource on the questionnaire API.

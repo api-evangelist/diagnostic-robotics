@@ -1,0 +1,81 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/diagnostic-robotics-precision-population-health-openapi.yml, openapi/diagnostic-robotics-patient-questionnaire-openapi.yml,
+  openapi/diagnostic-robotics-symptom-search-openapi.yml
+format: none
+format_note: >-
+  Diagnostic Robotics does NOT use RFC 9457 application/problem+json. No operation in any of the three published
+  specs declares a problem+json response. The Precision Population Health service is FastAPI and returns the
+  FastAPI default envelope - {"detail": "..."} for handled errors and {"detail":[{loc,msg,type}]} for 422
+  validation failures. The Patient Questionnaire and Symptom Search services (Swagger 2.0) declare 400/404
+  responses with a prose description and NO response schema at all, so an agent cannot parse those bodies
+  ahead of time.
+envelope:
+  field: detail
+  shapes:
+  - status: 422
+    schema: "HTTPValidationError -> {detail: [ValidationError{loc[], msg, type}]}"
+    source: openapi/diagnostic-robotics-precision-population-health-openapi.yml#/components/schemas/HTTPValidationError
+  - status: '400, 401, 404'
+    schema: none declared
+    observed: '{"detail":"Not authenticated"} on GET /api/v2/RiskList without a token'
+no_error_registry: >-
+  There is no published error-code reference, error registry, or troubleshooting page in the developer portal.
+  Only HTTP status codes with one-line descriptions in the specs.
+problems:
+- status: 400
+  title: Bad Request
+  schema: none
+  count_operations: 7
+  source_operations:
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_patient_raf_gaps_data_by_patient_id_api_v2_RiskAdjustmentProfile__patientId__get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_list_api_v2_RiskList__id__get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#export_risk_list_api_v2_RiskList__id___export_get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_profile_api_v2_RiskProfile__patientId__get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#update_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___update_post
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#ignore_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___ignore_post
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_patient_profile_api_v2_PatientProfile__patientId__get
+- status: 400
+  title: Invalid seed
+  detail: The question seed supplied on a respond call is not the seed of an open question on that visit.
+  schema: none
+  source_operations:
+  - openapi/diagnostic-robotics-patient-questionnaire-openapi.yml#post_question_response_resource
+- status: 401
+  title: Unauthorized
+  detail: Missing, malformed or expired bearer token. Observed body {"detail":"Not authenticated"}.
+  remediation: Re-run POST /api/oauth/token with client_id and client_secret and retry with a fresh bearer token.
+  schema: none
+  count_operations: 12
+  source_operations:
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#search_risk_lists_api_v2_RiskList_get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_list_api_v2_RiskList__id__get
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_profile_api_v2_RiskProfile__patientId__get
+- status: 404
+  title: Not Found
+  detail: >-
+    The addressed risk list id, patientId or nextStepId does not exist in this tenant. On the questionnaire
+    service the same status carries "Patient not found" or "Visit not found".
+  schema: none
+  count_operations: 11
+  source_operations:
+  - openapi/diagnostic-robotics-precision-population-health-openapi.yml#get_risk_list_api_v2_RiskList__id__get
+  - openapi/diagnostic-robotics-patient-questionnaire-openapi.yml#get_get_patient_resource
+  - openapi/diagnostic-robotics-patient-questionnaire-openapi.yml#get_create_visit_to_patient_resource
+  - openapi/diagnostic-robotics-patient-questionnaire-openapi.yml#get_medical_summary_resource
+  - openapi/diagnostic-robotics-patient-questionnaire-openapi.yml#get_visit_outcomes_resource
+- status: 422
+  title: Validation Error
+  detail: >-
+    FastAPI request-validation failure. Body is {"detail":[{"loc":["query","limit"],"msg":"...","type":"..."}]}
+    where loc identifies the offending parameter path.
+  schema: openapi/diagnostic-robotics-precision-population-health-openapi.yml#/components/schemas/HTTPValidationError
+  count_operations: 15
+  note: Declared on every operation of the Precision Population Health API.
+coverage:
+  operations_total: 30
+  operations_with_4xx: 16
+  operations_with_no_error_response: 14
+  note: >-
+    All 14 operations without a declared error response are on the two Swagger 2.0 questionnaire specs, which
+    document only the happy path for most calls.

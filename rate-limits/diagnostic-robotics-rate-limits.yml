@@ -1,0 +1,38 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.diagnosticrobotics.com/
+limit_count: 0
+limits: []
+headers:
+  request: []
+  response: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is documented anywhere, and no 429 response is declared
+    on any of the 30 published operations across the three specs. An agent has no runtime backoff signal to
+    read; the only failure codes it can plan for are 400, 401, 404 and 422.
+exhaustion_status: undocumented
+published_quotas: []
+adjacent_limits:
+- scope: POST /api/v1/dataset/{dataset_type}/upload
+  kind: payload-size
+  limit: 200MB per request
+  guidance: split larger datasets into several chunks, gzip before upload, or contact support
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/z7azwtx4q4s33-fhir-cclf-file-data-upload-api
+- scope: dataset refresh cadence
+  kind: expected-frequency
+  limit: claims data transferred at least once per month
+  note: A stated integration expectation, not an enforced limit.
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+searched:
+  pages_checked:
+  - url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+    status: 200
+  - url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+    status: 200
+  - url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/ldp3dalnzn9c1-risk-list
+    status: 200
+  result: no rate limits published in any of the 13 developer-portal articles
+  checked: '2026-08-12'
+note: >-
+  Honest zero - Diagnostic Robotics documents no rate limits. Recorded so the absence is data rather than an
+  unchecked field.

@@ -1,0 +1,73 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.diagnosticrobotics.com/ + live probes
+versioning:
+  scheme: uri-path
+  apis:
+  - api: Precision Population Health (Proactive Patient Risk Feed)
+    current: v2
+    spec_version: 2.3.35
+    mixed_versions: /api/v1/dataset/{dataset_type}/upload is still v1 while all resource paths are v2
+    spec_last_updated: '2024-04-14'
+    source: https://stoplight.io/api/v1/workspaces/d2s6MjI0Mg/projects
+  - api: Patient Questionnaire
+    current: v2
+    spec_version: 0.0.1
+    spec_last_updated: '2025-04-24'
+    note: The spec still carries version 0.0.1 even though every path is /v2.
+  - api: Symptom Search
+    current: unversioned
+    spec_version: 0.0.1
+    spec_last_updated: '2025-04-24'
+  policy_published: false
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  rfc8594: false
+  note: >-
+    No deprecation policy, sunset policy or Sunset/Deprecation header support is published anywhere in the
+    developer portal or in any of the three specs. NO Deprecation pointer is wired in apis.yml.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page:
+  url: https://diagnosticrobotics.statuspage.io
+  provider: Atlassian Statuspage
+  http_status: 200
+  page_id: mnx6g4fwv9bg
+  machine_readable: https://diagnosticrobotics.statuspage.io/api/v2/status.json
+  x-findings:
+  - id: abandoned-status-page
+    severity: high
+    detail: >-
+      The Statuspage tenant is live and publicly reachable, and it exposes the standard Statuspage v2 JSON API,
+      but page.updated_at is 2020-06-29 and the current indicator has been stuck at "major /
+      Partial System Outage" ever since. The page is served but not operated - a consumer polling it for
+      health would read a six-year-old outage as current.
+    evidence:
+    - url: https://diagnosticrobotics.statuspage.io/api/v2/status.json
+      status: 200
+      body_excerpt: '{"page":{"updated_at":"2020-06-29T19:38:10.816Z"},"status":{"indicator":"major","description":"Partial
+        System Outage"}}'
+    checked: '2026-08-12'
+changelog:
+  published: false
+  note: >-
+    The Stoplight workspace has the changelog feature enabled but no changelog is published on either public
+    project. Version history is only inferable from the project updated_at timestamps recorded above.
+surface_decay:
+- id: dead-auth0-tenant
+  detail: The authorizationCode flow in the published OpenAPI names an Auth0 tenant that no longer resolves.
+  cross_link: authentication/diagnostic-robotics-authentication.yml
+- id: placeholder-host-in-published-spec
+  detail: >-
+    The Patient Questionnaire and Symptom Search Swagger 2.0 documents publish host env-name.diagnosticrobotics.com,
+    a literal placeholder. There is no callable host in either contract.
+- id: stale-questionnaire-contract
+  detail: >-
+    The patient-questionnaire project was created 2022-07-27 and last touched 2025-04-24; neither of its two
+    services declares a single response schema for its error paths.
+checked: '2026-08-12'

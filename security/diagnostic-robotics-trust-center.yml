@@ -1,0 +1,39 @@
+generated: '2026-08-12'
+method: searched
+probe: true
+probe_result: >-
+  0-working/probe-security-programs.py returned trust=none because the keyword probe checks trust.<domain>,
+  security.<domain> and /trust|/security|/compliance. Diagnostic Robotics publishes its trust content at the
+  non-standard path /about/trust-center, which the probe does not try. Confirmed by hand.
+url: https://diagnosticrobotics.com/about/trust-center
+http_status: 200
+hosted: self-hosted marketing page
+portal_vendor: none
+certifications:
+- HIPAA
+- ISO 27001
+- ISO 27799
+- SOC 2 Type II
+controls:
+- annual penetration testing by an external security scoring service
+- clinician-reviewed AI models rather than generic LLM wrappers
+- policy-as-code governance with versioned audit trails
+- least-privilege, role-scoped, logged data segregation
+evidence:
+- source: https://diagnosticrobotics.com/about/trust-center
+  status: 200
+  keywords: [hipaa, iso 27001, soc 2 type ii, trust center, penetration testing]
+- source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  status: 200
+  keywords: [iso27001, iso27099, soc2 type2, hipaa self assessed]
+gaps:
+  downloadable_reports: false
+  subprocessor_list: false
+  security_contact: false
+  vulnerability_disclosure: false
+  status_page_linked_from_trust_page: false
+  note: >-
+    Evidence is gated: SOC 2 report, security questionnaires and architecture documentation are described as
+    available "under NDA" through the generic contact form. Nothing is machine-readable and there is no
+    security@ address, so a security team cannot start without a sales conversation.
+checked: '2026-08-12'

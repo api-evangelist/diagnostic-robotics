@@ -1,0 +1,57 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Diagnostic Robotics Precision Population Health API
+  version: 1.0.0
+x-generated: '2026-08-12'
+x-method: generated
+x-source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+extends: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+actions:
+- target: $.info
+  update:
+    description: >-
+      Proactive Patient Risk Feed. Upload FHIR R4 US Core / CCLF / custom claims and EHR datasets, then read
+      ranked actionable risk lists, per-patient risk profiles with contributing drivers and next steps, HCC/RAF
+      risk-adjustment gaps, and signed URLs for embeddable widgets. Served from a per-customer subdomain of
+      precision-population-health.diagnosticrobotics.com.
+    contact:
+      name: Diagnostic Robotics
+      url: https://diagnosticrobotics.com/contact
+    x-apievangelist-harvested: '2026-08-12'
+    x-apievangelist-source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+    x-apievangelist-conventions: conventions/diagnostic-robotics-conventions.yml
+    x-apievangelist-errors: errors/diagnostic-robotics-problem-types.yml
+- target: $.servers
+  update:
+  - url: https://{client}.precision-population-health.diagnosticrobotics.com
+    description: Per-customer production host
+    variables:
+      client:
+        default: sandbox
+        description: Customer-specific subdomain issued by Diagnostic Robotics during onboarding.
+- target: $.components.securitySchemes.OAuth2AuthorizationCodeBearer
+  update:
+    description: >-
+      DEPRECATED IN PRACTICE - the declared Auth0 tenant digital-outreach.us.auth0.com no longer resolves
+      (404 "Unknown host") as of 2026-08-12, and the audience is a development identifier. Use
+      OAuth2PasswordBearer against /api/oauth/token.
+    x-apievangelist-status: unusable
+- target: $.components.securitySchemes.OAuth2PasswordBearer
+  update:
+    description: >-
+      Exchange the client_id and client_secret issued by Diagnostic Robotics for a bearer token at
+      POST /api/oauth/token with Content-Type application/x-www-form-urlencoded.
+- target: $.paths['/api/v2/RiskList/{id}'].get
+  update:
+    x-apievangelist-pagination:
+      style: offset-limit
+      params: [offset, limit]
+      response_fields: [entities, total, offset]
+      note: >-
+        Documented in the Risk List integration guide but absent from the operation's declared parameters, so a
+        generated client cannot paginate without hand-editing.
+- target: $.paths['/api/v1/dataset/{dataset_type}/upload'].post
+  update:
+    x-apievangelist-limits:
+      max_request_body: 200MB
+      guidance: gzip and chunk larger datasets

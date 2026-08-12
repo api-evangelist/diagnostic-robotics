@@ -1,0 +1,34 @@
+generated: '2026-08-12'
+method: searched
+source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+docs: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+schemes:
+- name: OAuth2PasswordBearer
+  source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+  flows:
+  - flow: password
+    tokenUrl: /api/oauth/token
+- name: OAuth2AuthorizationCodeBearer
+  source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+    tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+scopes: []
+scope_count: 0
+note: >-
+  Both OAuth 2.0 schemes declare an EMPTY scopes map in the published OpenAPI, and the authentication guide
+  documents no scopes, permissions or consent screen - a client_id/client_secret pair is exchanged for a bearer
+  token that carries the full tenant grant. There is no published scope or permission reference page to search.
+  Authorization is therefore tenant-scoped rather than scope-scoped: an agent holding a token can read patient
+  risk profiles, patient demographics and HCC/RAF diagnosis data and can PATCH diagnoses, with no narrower grant
+  available. Recorded as an honest zero, not a gap in harvesting.
+searched:
+  pages_checked:
+  - url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+    status: 200
+    result: no scope reference
+  - url: https://digital-outreach.us.auth0.com/.well-known/openid-configuration
+    status: 404
+    result: Auth0 tenant no longer resolves, so scopes_supported cannot be read from discovery
+  checked: '2026-08-12'

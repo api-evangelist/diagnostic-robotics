@@ -1,18 +1,124 @@
 aid: diagnostic-robotics
 name: Diagnostic Robotics
-description: 'Diagnostic Robotics is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Diagnostic Robotics is a Tel Aviv and Boston based clinical AI company whose platform turns medical claims,
+  EHR and FHIR data into predictive risk stratification, actionable next steps and automated care operations
+  for health plans, providers and care organizations. The company publishes two public developer projects on a
+  Stoplight-hosted documentation portal: a Patient Questionnaire / triage API that walks a patient through
+  symptom search, adaptive questioning and a triage outcome, and a Proactive Patient Risk Feed (Precision
+  Population Health) API that ingests FHIR R4 US Core, CCLF and custom claims datasets and returns ranked risk
+  lists, per-patient risk profiles, HCC/RAF risk-adjustment gaps and embeddable widgets. Access is OAuth 2.0
+  client-credentials or API key and is provisioned per customer on a dedicated per-client subdomain.
+image: https://storage.googleapis.com/gpt-engineer-file-uploads/fKseK09ayVTXZOhSuXAlVH1splM2/social-images/social-1781800345789-Screenshot_2026-06-18_at_19.32.17.webp
 url: https://raw.githubusercontent.com/api-evangelist/diagnostic-robotics/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
-specificationVersion: '0.20'
+specificationVersion: '0.21'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
-- Company
-apis: []
+- health
+- healthcare
+- clinical-ai
+- population-health
+- risk-adjustment
+- predictive-analytics
+- triage
+- fhir
+- claims-data
+- care-management
+- payers
+- medical-coding
+apis:
+- name: Diagnostic Robotics Precision Population Health API
+  description: >-
+    REST API for the Proactive Patient Risk Feed: upload FHIR R4 US Core / CCLF / custom claims and EHR datasets,
+    then retrieve ranked actionable risk lists, per-patient risk profiles with contributing factors and next
+    steps, HCC/RAF risk-adjustment gap data, and signed URLs for embeddable risk list, risk profile, patient
+    profile and risk-adjustment widgets. OAuth 2.0 bearer tokens; served from a per-customer subdomain.
+  humanURL: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - health
+  - population-health
+  - risk-adjustment
+  - predictive-analytics
+  - fhir
+  - claims-data
+  - care-management
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+  - type: Documentation
+    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Overlay
+    url: overlays/diagnostic-robotics-precision-population-health-overlay.yaml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+- name: Diagnostic Robotics Patient Questionnaire API
+  description: >-
+    REST API for the patient-questionnaire and triage service. Create a patient, open a visit, attach symptoms,
+    walk the adaptive question tree one question at a time, finish the visit, then read the medical summary and
+    triage outcomes. Authenticated with an x-client API key issued by Diagnostic Robotics.
+  humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  baseURL: https://env-name.diagnosticrobotics.com/api/pq
+  tags:
+  - health
+  - triage
+  - clinical-ai
+  - questionnaire
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+  - type: Documentation
+    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: Overlay
+    url: overlays/diagnostic-robotics-patient-questionnaire-overlay.yaml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+- name: Diagnostic Robotics Symptom Search Service
+  description: >-
+    REST API for symptom lookup inside the patient-questionnaire flow: autocomplete a free-text symptom string
+    against the Diagnostic Robotics symptom ontology, and list the symptoms already attached to a visit.
+    Authenticated with the same x-client API key as the questionnaire API.
+  humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  baseURL: https://env-name.diagnosticrobotics.com/api/search
+  tags:
+  - health
+  - triage
+  - clinical-ai
+  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-symptom-search-openapi.yml
+  - type: Documentation
+    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: Overlay
+    url: overlays/diagnostic-robotics-symptom-search-overlay.yaml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +126,65 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://forgeglobal.com/diagnostic-robotics_stock/
+  url: https://diagnosticrobotics.com/
+- type: DeveloperPortal
+  url: https://docs.diagnosticrobotics.com/
+- type: Documentation
+  url: https://docs.diagnosticrobotics.com/
+- type: APIReference
+  url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+- type: GettingStarted
+  url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+- type: Support
+  url: https://diagnosticrobotics.com/contact
+- type: Blog
+  url: https://diagnosticrobotics.com/thought-leadership
+- type: GitHubOrganization
+  url: https://github.com/Diagnostic-Robotics
+- type: TermsOfService
+  url: https://diagnosticrobotics.com/terms
+- type: PrivacyPolicy
+  url: https://diagnosticrobotics.com/privacy
+- type: StatusPage
+  url: https://diagnosticrobotics.statuspage.io
+- type: TrustCenter
+  url: security/diagnostic-robotics-trust-center.yml
+- type: Compliance
+  url: https://diagnosticrobotics.com/about/trust-center
+- type: LinkedIn
+  url: https://www.linkedin.com/company/diagnostic-robotics/
+- type: Twitter
+  url: https://x.com/DiagnosticRobo
+- type: Authentication
+  url: authentication/diagnostic-robotics-authentication.yml
+- type: OAuthScopes
+  url: scopes/diagnostic-robotics-scopes.yml
+- type: Conventions
+  url: conventions/diagnostic-robotics-conventions.yml
+- type: ErrorCatalog
+  url: errors/diagnostic-robotics-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/diagnostic-robotics-lifecycle.yml
+- type: Conformance
+  url: conformance/diagnostic-robotics-conformance.yml
+- type: DataModel
+  url: data-model/diagnostic-robotics-data-model.yml
+- type: Components
+  url: components/diagnostic-robotics-components.yml
+- type: Sandbox
+  url: sandbox/diagnostic-robotics-sandbox.yml
+- type: DomainSecurity
+  url: security/diagnostic-robotics-domain-security.yml
+- type: Plans
+  url: plans/diagnostic-robotics-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/diagnostic-robotics-rate-limits.yml
+- type: LLMsTxt
+  url: llms/diagnostic-robotics-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1

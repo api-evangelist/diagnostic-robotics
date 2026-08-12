@@ -1,0 +1,59 @@
+generated: '2026-08-12'
+method: probed
+source: https://docs.diagnosticrobotics.com/ (Stoplight hosted mocks) + live requests
+summary: >-
+  Diagnostic Robotics publishes no self-serve sandbox, no test credentials and no test data set. What it does
+  publish - almost certainly as a side effect of hosting its docs on Stoplight - is a live Prism mock server
+  per public API project, reachable with no Diagnostic Robotics credential at all. Any placeholder value in the
+  declared auth header or bearer token satisfies Prism, and the mock replies with the example payloads from the
+  provider's own specs. That makes an otherwise fully sales-gated API explorable before contact.
+test_live_separation:
+  modes: [sandbox host, per-customer production host]
+  sandbox_host: https://sandbox.precision-population-health.diagnosticrobotics.com
+  production_host_pattern: https://[CLIENT].precision-population-health.diagnosticrobotics.com
+  credential_prefixes: none published
+  note: >-
+    The sandbox host is declared as the single servers[] entry in the published OpenAPI, but it is NOT open:
+    GET /api/v2/RiskList returns 401 {"detail":"Not authenticated"} and there is no way to obtain a token
+    without a customer contract.
+mock_servers:
+- name: Precision Population Health (Proactive Patient Risk Feed)
+  url: https://stoplight.io/mocks/diagnosticrobotics/proactive-patient-risk-feed-api/8087570
+  engine: Stoplight Prism
+  spec: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+  auth: any non-empty Authorization bearer value satisfies the declared oauth2 scheme
+  verified:
+    request: "GET /api/v2/RiskList with header Authorization Bearer test"
+    status: 200
+    body: '[{"id":"a773fc5b078a4070a20122d7a2409d94","updateDate":"2019-08-24","serveDate":"2019-08-24","population":"DCE","product":"PREVENTABLE","url":"api/v2/RiskList/a773fc5b078a4070a20122d7a2409d94"}]'
+    checked: '2026-08-12'
+  unauthenticated_behavior: 401 Prism UNAUTHORIZED error object
+- name: Patient Questionnaire
+  url: https://stoplight.io/mocks/diagnosticrobotics/patient-questionnaire-api/195755
+  engine: Stoplight Prism
+  spec: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+  auth: any non-empty x-client header satisfies the declared apiKey scheme
+  unauthenticated_behavior: 401 Prism UNAUTHORIZED error object
+- name: Symptom Search
+  url: https://stoplight.io/mocks/diagnosticrobotics/patient-questionnaire-api/78270070
+  engine: Stoplight Prism
+  spec: openapi/diagnostic-robotics-symptom-search-openapi.yml
+  auth: any non-empty x-client header satisfies the declared apiKey scheme
+  verified:
+    request: "GET /symptoms/autocomplete?q=head with header x-client test"
+    status: 200
+    body: '["string"]'
+    checked: '2026-08-12'
+test_values:
+  published: false
+  note: >-
+    No test patient ids, test risk list ids, test claims files or magic identifiers are published. The sample
+    identifiers that appear in the integration guides (patientId MX22334 / MX12345, risk list id
+    72be622eb2b445f086b346265c050d56) are documentation illustrations, not working fixtures, and are recorded
+    here only so an agent does not mistake them for credentials.
+sample_data_pointers:
+- description: CMS BCDA publishes valid FHIR-formatted claims samples that the ingestion guide points readers at
+  url: https://bcda.cms.gov/guide.html#try-the-api
+  first_party: false
+test_clocks: none
+fixture_tooling: none

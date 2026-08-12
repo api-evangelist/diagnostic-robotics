@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Diagnostic Robotics Patient Questionnaire API
+  version: 1.0.0
+x-generated: '2026-08-12'
+x-method: generated
+x-source: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+extends: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-harvested: '2026-08-12'
+    x-apievangelist-source: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+    x-apievangelist-spec-format: Swagger 2.0 - not upgraded to OpenAPI 3.x by the provider
+    x-apievangelist-flow: create patient -> create visit -> add symptoms -> answer questions -> finish -> read
+      outcomes
+- target: $.host
+  update: env-name.diagnosticrobotics.com
+  x-apievangelist-note: >-
+    The published host is a literal placeholder. Diagnostic Robotics issues the real environment host during
+    onboarding; API Evangelist did not substitute a guess.
+- target: $.securityDefinitions.apikey
+  update:
+    description: >-
+      Client API key issued by Diagnostic Robotics, sent on every request as the x-client header. There is no
+      self-serve issuance path.

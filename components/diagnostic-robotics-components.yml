@@ -1,0 +1,45 @@
+generated: '2026-08-12'
+method: searched
+source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/aroq4qukz0mhm-widget-integration
+summary: >-
+  Diagnostic Robotics ships embeddable UI as iframe widgets rather than as a JavaScript element library. There
+  is no loader script and no npm package. A widget is obtained by calling a REST endpoint with the customer's
+  bearer token; the API answers 204 No Content with a Location header carrying a short-lived signed URL that the
+  integrator embeds in an iframe (web) or WebFrame (native).
+loader_libraries: []
+distribution: server-issued signed URL, embedded as an iframe
+families:
+- family: Population Health Widgets
+  components:
+  - name: Risk List Widget
+    description: Prioritized, interactive list of at-risk members for a population and product, with risk
+      stratification.
+    endpoint: GET /api/v2/RiskList/{id}/_widget
+    operation_id: get_risk_list_widget_api_v2_RiskList__id___widget_get
+  - name: Risk Profile Widget
+    description: Individual patient risk profile - risk factors, contributing drivers and recommended next steps.
+    endpoint: GET /api/v2/RiskProfile/{patientId}/_widget
+    operation_id: get_risk_profile_widget_api_v2_RiskProfile__patientId___widget_get
+  - name: Patient Profile Widget
+    description: Patient demographic and clinical profile view.
+    endpoint: GET /api/v2/PatientProfile/{patientId}/_widget
+    operation_id: get_patient_profile_widget_api_v2_PatientProfile__patientId___widget_get
+  - name: Patient Risk Adjustment Profile Widget
+    description: HCC / RAF gap view - suspected and confirmed diagnoses and coding recommendations for a patient.
+    endpoint: GET /api/v2/RiskAdjustmentProfile/{patientId}/_widget
+    operation_id: get_patient_risk_adjustment_profile_widget_api_v2_RiskAdjustmentProfile__patientId___widget_get
+embed_contract:
+  response: 204 No Content
+  location_header: signed widget URL
+  recommended_markup: '<iframe src="{url}" sandbox="allow-scripts" referrerpolicy="origin"/>'
+  token_lifetime: a few minutes (documented, exact TTL not published)
+  caching_guidance: do not store or share the widget URL - it embeds a single-use authentication token
+  source: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/aroq4qukz0mhm-widget-integration
+x-findings:
+- id: widget-doc-path-drift
+  severity: low
+  detail: >-
+    The Widget Integration guide documents the Patient Risk Profile widget at /api/v1/RiskProfile/[ID]/_widget
+    while the published OpenAPI declares /api/v2/RiskProfile/{patientId}/_widget. The spec is the newer of the
+    two; the guide was not updated with the v2 cut.
+  checked: '2026-08-12'

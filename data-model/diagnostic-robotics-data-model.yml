@@ -1,0 +1,167 @@
+generated: '2026-08-12'
+method: derived
+source: openapi/diagnostic-robotics-precision-population-health-openapi.yml, openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+summary: >-
+  Two disjoint object graphs. The Precision Population Health graph is anchored on Patient: a RiskList ranks
+  patients, each patient has a RiskProfile (drivers + next steps), a PatientProfile (demographics + information
+  sections) and a RiskAdjustmentProfile (coded and uncoded HCC conditions). The Patient Questionnaire graph is
+  anchored on Visit: a Patient has Visits, a Visit accumulates Symptoms and Questions and terminates in
+  Outcomes. Nothing links the two - there is no shared patient identifier type across the products.
+identifiers:
+  patient_id:
+    type: string
+    format: opaque customer-supplied member id
+    examples_in_docs: [MX22334, MX12345]
+    note: The member id is the customer's own id space; Diagnostic Robotics does not mint it.
+  risk_list_id:
+    type: string
+    format: 32-char lowercase hex (uuid without dashes)
+    example: 72be622eb2b445f086b346265c050d56
+  visit_id:
+    type: string
+    source: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+entities:
+- name: Patient
+  domain: population-health
+  schema: PatientDetails
+  fields: [id, firstName, middleName, lastName, dob, state]
+  pii: true
+  phi: true
+- name: RiskList
+  domain: population-health
+  schema: RiskList
+  fields: [metadata, total, offset, entities]
+- name: RiskListMetadata
+  domain: population-health
+  fields: [id, updateDate, serveDate, population, product, url]
+- name: RiskListPatientItem
+  domain: population-health
+  fields: [patientId, patient, riskScore, riskProfileUrl, patientProfileUrl]
+- name: RiskProfile
+  domain: population-health
+  fields: [patientId, updateDate, patient, nextSteps, drivers, riskScore]
+- name: NextStep
+  domain: care-management
+  fields: [id, displayText, contributingDrivers, reference, owner, status]
+- name: Driver
+  domain: population-health
+  fields: [contributingFactor]
+- name: PatientProfile
+  domain: population-health
+  fields: [patientId, updateDate, patient, sections]
+- name: PatientRiskAdjustmentProfileResponse
+  domain: risk-adjustment
+  fields: [patient, codedRiskScore, uncodedRiskScore, codedConditions, uncodedConditions, meta]
+- name: PatientHccResponse
+  domain: risk-adjustment
+  fields: [code, value, description, version, diagnoses]
+- name: PatientHccRecommendationResponse
+  domain: risk-adjustment
+  fields: [diagnoses, status]
+- name: Dataset
+  domain: ingestion
+  fields: [dataset_type, format, updated_for, file]
+  note: Not a retrievable resource - write-only via POST /api/v1/dataset/{dataset_type}/upload.
+- name: Visit
+  domain: triage
+  source: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+- name: Question
+  domain: triage
+- name: Symptom
+  domain: triage
+- name: Outcome
+  domain: triage
+  schema: OutcomeModel
+relationships:
+- from: RiskList
+  to: RiskListMetadata
+  kind: has_one
+  via: metadata
+- from: RiskList
+  to: RiskListPatientItem
+  kind: has_many
+  via: entities
+- from: RiskListPatientItem
+  to: Patient
+  kind: has_one
+  via: patient
+- from: RiskListPatientItem
+  to: RiskProfile
+  kind: has_one
+  via: riskProfileUrl
+  binding: link
+- from: RiskListPatientItem
+  to: PatientProfile
+  kind: has_one
+  via: patientProfileUrl
+  binding: link
+- from: RiskProfile
+  to: Patient
+  kind: has_one
+  via: patient
+- from: RiskProfile
+  to: NextStep
+  kind: has_many
+  via: nextSteps
+- from: RiskProfile
+  to: Driver
+  kind: has_many
+  via: drivers
+- from: NextStep
+  to: NextStepStatus
+  kind: has_one
+  via: status
+- from: Driver
+  to: ContributingFactor
+  kind: has_one
+  via: contributingFactor
+- from: PatientProfile
+  to: Patient
+  kind: has_one
+  via: patient
+- from: PatientProfile
+  to: PatientInformationSection
+  kind: has_many
+  via: sections
+- from: PatientRiskAdjustmentProfileResponse
+  to: PatientHccResponse
+  kind: has_many
+  via: codedConditions
+- from: PatientRiskAdjustmentProfileResponse
+  to: PatientHccRecommendationResponse
+  kind: has_many
+  via: uncodedConditions
+- from: PatientHccResponse
+  to: CodedPatientIcdResponse
+  kind: has_many
+  via: diagnoses
+- from: PatientHccRecommendationResponse
+  to: PatientIcdSuggestionResponse
+  kind: has_many
+  via: diagnoses
+- from: PatientIcdSuggestionResponse
+  to: Reason
+  kind: has_many
+  via: reason
+- from: Patient
+  to: Visit
+  kind: has_many
+  via: /v2/patients/{patient_id}/visits
+  source: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+- from: Visit
+  to: Symptom
+  kind: has_many
+  via: /v2/visits/{visit_id}/symptoms/{symptom_id}
+- from: Visit
+  to: Question
+  kind: has_many
+  via: /v2/visits/{visit_id}/questions/{seed}
+- from: Visit
+  to: Outcome
+  kind: has_many
+  via: /v2/visits/{visit_id}/outcomes
+counts:
+  schemas_precision_population_health: 28
+  definitions_patient_questionnaire: 10
+  definitions_symptom_search: 1
+  relationships: 22
