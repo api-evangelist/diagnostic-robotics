@@ -5,11 +5,10 @@ source: openapi/diagnostic-robotics-precision-population-health-openapi.yml
 published_server: null
 searched:
   official_server_found: false
-  note: >-
-    Diagnostic Robotics operates NO Model Context Protocol server. This file is a CANDIDATE tool shape derived
-    from the published OpenAPI so the agent surface can be reasoned about; it is not a server Diagnostic
-    Robotics runs. It deliberately carries NO `type: MCPServer` pointer in apis.yml — wiring one would credit
-    the company with an agent surface it does not operate.
+  note: 'Diagnostic Robotics operates NO Model Context Protocol server. This file is a CANDIDATE tool
+    shape derived from the published OpenAPI so the agent surface can be reasoned about; it is not a server
+    Diagnostic Robotics runs. It deliberately carries NO `type: MCPServer` pointer in apis.yml — wiring
+    one would credit the company with an agent surface it does not operate.'
   probes:
   - url: https://mcp.diagnosticrobotics.com
     result: DNS does not resolve
@@ -23,8 +22,8 @@ searched:
 transport: null
 auth:
   would_require: OAuth 2.0 bearer token from POST /api/oauth/token, per-customer subdomain
-  scopes: none exist — a token is a full tenant grant, so an MCP server fronting this API would need its own
-    consequence gating rather than delegating to OAuth scopes
+  scopes: none exist — a token is a full tenant grant, so an MCP server fronting this API would need its
+    own consequence gating rather than delegating to OAuth scopes
 tools:
 - name: search_risk_lists
   description: Find available risk lists filtered by product and population.
@@ -77,7 +76,12 @@ excluded_from_candidate:
   reason: credential exchange belongs in the server's transport layer, never as an agent-callable tool
 - operations: the four *_widget operations
   reason: they return short-lived signed embed URLs meant for a browser iframe, not agent-consumable data
-phi_warning: >-
-  Every read tool above returns protected health information — patient names, dates of birth, state, ICD/HCC
-  diagnoses and risk scores. Any real MCP deployment fronting this API needs PHI handling, a BAA and audit
-  logging before it is exposed to a general-purpose agent.
+phi_warning: Every read tool above returns protected health information — patient names, dates of birth,
+  state, ICD/HCC diagnoses and risk scores. Any real MCP deployment fronting this API needs PHI handling,
+  a BAA and audit logging before it is exposed to a general-purpose agent.
+deployment:
+  mode: none
+  verified: derived
+  tools: 10
+  checked: '2026-08-12'
+  source: catalog MCP census

@@ -1,0 +1,345 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Diagnostic Robotics API",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Patients v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "post_patient_list_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/patients/"
+          },
+          "docs": "Create a patient with basic demographic data"
+        },
+        {
+          "info": {
+            "name": "get_get_patient_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/patients/:patient_id",
+            "params": [
+              {
+                "name": "patient_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "external",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get patient with basic demographic data"
+        },
+        {
+          "info": {
+            "name": "get_create_visit_to_patient_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/patients/:patient_id/visits",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "patient_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Query all active visits for a patient"
+        },
+        {
+          "info": {
+            "name": "post_create_visit_to_patient_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/patients/:patient_id/visits",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "patient_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create new visit for a patient"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Visits v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get_get_visit_by_id_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "patch_get_visit_by_id_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "post_finished_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/finish",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Finalize visit and trigger \"Questionnaire finished\" webhooks"
+        },
+        {
+          "info": {
+            "name": "get_medical_summary_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/medical_summary",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get medical summary for visit"
+        },
+        {
+          "info": {
+            "name": "get_visit_outcomes_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/outcomes",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get questionnaire predicted outcomes"
+        },
+        {
+          "info": {
+            "name": "post_symptoms_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/symptoms/:symptom_id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "symptom_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add a symptom to the current visit"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Questions v2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get_questions_first_unanswered_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/questions/first_unanswered",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get first seed"
+        },
+        {
+          "info": {
+            "name": "get_question_by_seed_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/questions/:seed",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get question details by seed"
+        },
+        {
+          "info": {
+            "name": "post_question_response_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/visits/:visit_id/questions/:seed/respond",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "seed",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Answer a question"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

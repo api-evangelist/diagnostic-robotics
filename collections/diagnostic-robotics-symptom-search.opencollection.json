@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Search Service",
+    "version": "0.0.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get_symptom_search_autocomplete_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/symptoms/autocomplete",
+            "params": [
+              {
+                "name": "search_term",
+                "value": "",
+                "type": "query",
+                "description": "Search term for symptom search."
+              },
+              {
+                "name": "sex",
+                "value": "",
+                "type": "query",
+                "description": "Biological sex of the patient, required for demographic specific symptoms"
+              }
+            ]
+          },
+          "docs": "autocomplete  search term for a prefix or partial term"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Visits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "get_symptom_search_resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/visits/:visit_id/symptoms",
+            "params": [
+              {
+                "name": "visit_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "search_term",
+                "value": "",
+                "type": "query",
+                "description": "Search term for symptom search"
+              },
+              {
+                "name": "sex",
+                "value": "",
+                "type": "query",
+                "description": "Biological sex of the patient, required for demographic specific symptoms"
+              }
+            ]
+          },
+          "docs": "Search for symptoms by term"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,282 @@
+{
+  "item": [
+    {
+      "id": "1d978004-efb0-46d7-b85c-9748449fc402",
+      "name": "default",
+      "description": {
+        "content": "Global",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61e4fdf4-b945-44cd-bdf7-2c0a5d3b7fc5",
+          "name": "get symptom search autocomplete resource",
+          "request": {
+            "name": "get symptom search autocomplete resource",
+            "description": {
+              "content": "autocomplete  search term for a prefix or partial term",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "symptoms",
+                "autocomplete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search_term",
+                  "value": "<string>",
+                  "description": "Search term for symptom search."
+                },
+                {
+                  "disabled": false,
+                  "key": "sex",
+                  "value": "<string>",
+                  "description": "Biological sex of the patient, required for demographic specific symptoms"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ef5af42-c903-4538-a42f-74b84646b955",
+              "name": "Symptoms found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "symptoms",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sex",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-client",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "dbdd6b6b-1d6d-41bc-9c9d-e8c9e117e604",
+      "name": "Visits",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8d1fea5-e3ff-43e6-aead-56763e53e72b",
+          "name": "get symptom search resource",
+          "request": {
+            "name": "get symptom search resource",
+            "description": {
+              "content": "Search for symptoms by term",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "visits",
+                ":visit_id",
+                "symptoms"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search_term",
+                  "value": "<string>",
+                  "description": "Search term for symptom search"
+                },
+                {
+                  "disabled": false,
+                  "key": "sex",
+                  "value": "<string>",
+                  "description": "Biological sex of the patient, required for demographic specific symptoms"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "visit_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2cd5f65c-1c76-481c-9b4c-77d61c8726eb",
+              "name": "Symptoms found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "visits",
+                    ":visit_id",
+                    "symptoms"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search_term",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sex",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "visit_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-client",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1778,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"medical_title\": \"string\",\n    \"title\": \"string\"\n  },\n  {\n    \"id\": 7774,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"medical_title\": \"string\",\n    \"title\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://env-name.diagnosticrobotics.com/api/search",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-client"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6a6359f3-64ed-44ae-8907-8c3a0af75c87",
+    "name": "Search Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n",
+      "type": "text/plain"
+    }
+  }
+}

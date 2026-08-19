@@ -1,0 +1,539 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Diagnostic Robotics API",
+    "version": "2.3.35"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Dataset Upload API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v1/dataset/:dataset_type/upload",
+            "params": [
+              {
+                "name": "dataset_type",
+                "value": "",
+                "type": "path",
+                "description": "Uploaded dataset type."
+              },
+              {
+                "name": "updated_for",
+                "value": "",
+                "type": "query",
+                "description": "YYYY-MM-DD format. e.g 2022-11-01."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Uploaded dataset file type."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Upload"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login For Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/oauth/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Login For Access Token"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Risk Adjustment Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update Diagnoses",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskAdjustmentProfile/:patientId/diagnoses",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX3DJ9VV",
+                "type": "path",
+                "description": "Patient Id"
+              },
+              {
+                "name": "icd_codes",
+                "value": "",
+                "type": "query",
+                "description": "Update by one or more icd codes"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier",
+              "accessTokenUrl": "https://digital-outreach.us.auth0.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update Diagnoses"
+        },
+        {
+          "info": {
+            "name": "Get Patient Raf Gaps Data By Patient Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskAdjustmentProfile/:patientId",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX3DJ9VV",
+                "type": "path",
+                "description": "Patient Id"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier",
+              "accessTokenUrl": "https://digital-outreach.us.auth0.com/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get risk adjustment profile for a patient"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Risk List API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search Risk Lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskList",
+            "params": [
+              {
+                "name": "product",
+                "value": "",
+                "type": "query",
+                "description": "filter by product type"
+              },
+              {
+                "name": "population",
+                "value": "",
+                "type": "query",
+                "description": "filter by population"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Search available risk lists"
+        },
+        {
+          "info": {
+            "name": "Get Risk List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskList/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "a773fc5b078a4070a20122d7a2409d94",
+                "type": "path",
+                "description": "risk list"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get risk list"
+        },
+        {
+          "info": {
+            "name": "Export Risk List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskList/:id/$export",
+            "params": [
+              {
+                "name": "id",
+                "value": "a773fc5b078a4070a20122d7a2409d94",
+                "type": "path",
+                "description": "risk list"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Export risk list"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Risk Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Risk Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskProfile/:patientId",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX3DJ9VV",
+                "type": "path",
+                "description": "Patient Id"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get risk profile data"
+        },
+        {
+          "info": {
+            "name": "Update Next Step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskProfile/:patientId/NextStep/:nextStepId/$update",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX3DJ9VV",
+                "type": "path",
+                "description": "Patient Id"
+              },
+              {
+                "name": "nextStepId",
+                "value": "pcp_assign",
+                "type": "path",
+                "description": "Next Step Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Update Next Step status."
+        },
+        {
+          "info": {
+            "name": "Ignore Next Step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskProfile/:patientId/NextStep/:nextStepId/$ignore",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "a773fc5b078a4070a20122d7a2409d94",
+                "type": "path",
+                "description": "Patient Id"
+              },
+              {
+                "name": "nextStepId",
+                "value": "pcp_assign",
+                "type": "path",
+                "description": "Next Step Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Ignore Next Step."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Patient Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Patient Profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/PatientProfile/:patientId",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX938DJ8",
+                "type": "path",
+                "description": "Patient Id"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get patient profile data"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Widgets API",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Risk List Widget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskList/:id/_widget",
+            "params": [
+              {
+                "name": "id",
+                "value": "a773fc5b078a4070a20122d7a2409d94",
+                "type": "path",
+                "description": "Risk list id."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get risk list widget"
+        },
+        {
+          "info": {
+            "name": "Get Risk Profile Widget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskProfile/:patientId/_widget",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX938DJ8",
+                "type": "path",
+                "description": "Patient id."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get risk profile widget."
+        },
+        {
+          "info": {
+            "name": "Get Patient Profile Widget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/PatientProfile/:patientId/_widget",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX938DJ8",
+                "type": "path",
+                "description": "Patient id."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get patient profile widget."
+        },
+        {
+          "info": {
+            "name": "Get Patient Risk Adjustment Profile Widget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://sandbox.precision-population-health.diagnosticrobotics.com/api/v2/RiskAdjustmentProfile/:patientId/_widget",
+            "params": [
+              {
+                "name": "patientId",
+                "value": "MX938DJ8",
+                "type": "path",
+                "description": "Patient id."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "resource_owner_password_credentials",
+              "accessTokenUrl": "/api/oauth/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get Risk Adjustment profile widget."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
