@@ -17,6 +17,19 @@ specificationVersion: '0.23'
 created: '2026-08-12'
 modified: '2026-08-12'
 tags:
+- Health
+- Healthcare
+- Clinical AI
+- Population Health
+- Risk Adjustment
+- Predictive Analytics
+- triage
+- FHIR
+- Claims Data
+- Care Management
+- Payers
+- Medical Coding
+tags_raw:
 - health
 - healthcare
 - clinical-ai
@@ -39,6 +52,14 @@ apis:
   humanURL: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
+  - Health
+  - Population Health
+  - Risk Adjustment
+  - Predictive Analytics
+  - FHIR
+  - Claims Data
+  - Care Management
+  tags_raw:
   - health
   - population-health
   - risk-adjustment
@@ -77,6 +98,11 @@ apis:
   humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
   baseURL: https://env-name.diagnosticrobotics.com/api/pq
   tags:
+  - Health
+  - triage
+  - Clinical AI
+  - Questionnaire
+  tags_raw:
   - health
   - triage
   - clinical-ai
@@ -102,6 +128,11 @@ apis:
   humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
   baseURL: https://env-name.diagnosticrobotics.com/api/search
   tags:
+  - Health
+  - triage
+  - Clinical AI
+  - Search
+  tags_raw:
   - health
   - triage
   - clinical-ai
