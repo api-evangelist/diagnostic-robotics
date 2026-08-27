@@ -43,39 +43,26 @@ tags_raw:
 - payers
 - medical-coding
 apis:
-- name: Diagnostic Robotics Precision Population Health API
-  description: >-
-    REST API for the Proactive Patient Risk Feed: upload FHIR R4 US Core / CCLF / custom claims and EHR datasets,
-    then retrieve ranked actionable risk lists, per-patient risk profiles with contributing factors and next
-    steps, HCC/RAF risk-adjustment gap data, and signed URLs for embeddable risk list, risk profile, patient
-    profile and risk-adjustment widgets. OAuth 2.0 bearer tokens; served from a per-customer subdomain.
-  humanURL: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+- aid: diagnostic-robotics:diagnostic-robotics-api-auth-api
+  name: Diagnostic Robotics API Auth API
+  description: The API Auth API from Diagnostic Robotics — 1 operation(s) for api auth.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
-  - Health
-  - Population Health
-  - Risk Adjustment
-  - Predictive Analytics
-  - FHIR
-  - Claims Data
-  - Care Management
-  tags_raw:
-  - health
-  - population-health
-  - risk-adjustment
-  - predictive-analytics
-  - fhir
-  - claims-data
-  - care-management
+  - API Auth
   properties:
   - type: OpenAPI
-    url: openapi/diagnostic-robotics-precision-population-health-openapi.yml
+    url: openapi/diagnostic-robotics-api-auth-api-openapi.yml
   - type: Documentation
-    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   - type: APIReference
-    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
   - type: GettingStarted
-    url: https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
   - type: Authentication
     url: authentication/diagnostic-robotics-authentication.yml
   - type: OAuthScopes
@@ -84,78 +71,520 @@ apis:
     url: errors/diagnostic-robotics-problem-types.yml
   - type: DataModel
     url: data-model/diagnostic-robotics-data-model.yml
-  - type: Overlay
-    url: overlays/diagnostic-robotics-precision-population-health-overlay.yaml
   - type: Components
     url: components/diagnostic-robotics-components.yml
   - type: Sandbox
     url: sandbox/diagnostic-robotics-sandbox.yml
-- name: Diagnostic Robotics Patient Questionnaire API
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-dataset-upload-api-api
+  name: Diagnostic Robotics Dataset Upload API
   description: >-
-    REST API for the patient-questionnaire and triage service. Create a patient, open a visit, attach symptoms,
-    walk the adaptive question tree one question at a time, finish the visit, then read the medical summary and
-    triage outcomes. Authenticated with an x-client API key issued by Diagnostic Robotics.
-  humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
-  baseURL: https://env-name.diagnosticrobotics.com/api/pq
+    The Dataset Upload API API from Diagnostic Robotics — 1 operation(s) for dataset upload api.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
-  - Health
-  - triage
-  - Clinical AI
-  - Questionnaire
-  tags_raw:
-  - health
-  - triage
-  - clinical-ai
-  - questionnaire
+  - Dataset Upload API
   properties:
   - type: OpenAPI
-    url: openapi/diagnostic-robotics-patient-questionnaire-openapi.yml
+    url: openapi/diagnostic-robotics-dataset-upload-api-api-openapi.yml
   - type: Documentation
-    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   - type: APIReference
-    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
   - type: Authentication
     url: authentication/diagnostic-robotics-authentication.yml
-  - type: Overlay
-    url: overlays/diagnostic-robotics-patient-questionnaire-overlay.yaml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
   - type: Sandbox
     url: sandbox/diagnostic-robotics-sandbox.yml
-- name: Diagnostic Robotics Symptom Search Service
-  description: >-
-    REST API for symptom lookup inside the patient-questionnaire flow: autocomplete a free-text symptom string
-    against the Diagnostic Robotics symptom ontology, and list the symptoms already attached to a visit.
-    Authenticated with the same x-client API key as the questionnaire API.
-  humanURL: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
-  baseURL: https://env-name.diagnosticrobotics.com/api/search
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-default-api
+  name: Diagnostic Robotics Default API
+  description: Global
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
-  - Health
-  - triage
-  - Clinical AI
-  - Search
-  tags_raw:
-  - health
-  - triage
-  - clinical-ai
-  - search
+  - default
   properties:
   - type: OpenAPI
-    url: openapi/diagnostic-robotics-symptom-search-openapi.yml
+    url: openapi/diagnostic-robotics-default-api-openapi.yml
   - type: Documentation
-    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   - type: APIReference
-    url: https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
   - type: Authentication
     url: authentication/diagnostic-robotics-authentication.yml
-  - type: Overlay
-    url: overlays/diagnostic-robotics-symptom-search-overlay.yaml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
   - type: Sandbox
     url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-patient-profile-api
+  name: Diagnostic Robotics Patient Profile API
+  description: The Patient Profile API from Diagnostic Robotics — 1 operation(s) for patient profile.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Patient Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-patient-profile-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-patients-v2-api
+  name: Diagnostic Robotics Patients v2 API
+  description: Patients resource
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Patients v2
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-patients-v2-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-questions-v2-api
+  name: Diagnostic Robotics Questions v2 API
+  description: Questions resource
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Questions v2
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-questions-v2-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-risk-adjustment-profile-api
+  name: Diagnostic Robotics Risk Adjustment Profile API
+  description: >-
+    The Risk Adjustment Profile API from Diagnostic Robotics — 2 operation(s) for risk adjustment profile.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Risk Adjustment Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-risk-adjustment-profile-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-risk-list-api-api
+  name: Diagnostic Robotics Risk List API
+  description: The Risk List API API from Diagnostic Robotics — 3 operation(s) for risk list api.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Risk List API
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-risk-list-api-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-risk-profile-api
+  name: Diagnostic Robotics Risk Profile API
+  description: The Risk Profile API from Diagnostic Robotics — 3 operation(s) for risk profile.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Risk Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-risk-profile-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-visits-api
+  name: Diagnostic Robotics Visits API
+  description: The Visits API from Diagnostic Robotics — 1 operation(s) for visits.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Visits
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-visits-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-visits-v2-api
+  name: Diagnostic Robotics Visits v2 API
+  description: Patient visits resource
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Visits v2
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-visits-v2-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+- aid: diagnostic-robotics:diagnostic-robotics-widgets-api-api
+  name: Diagnostic Robotics Widgets API
+  description: The Widgets API API from Diagnostic Robotics — 4 operation(s) for widgets api.
+  humanURL: >-
+    https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
+  tags:
+  - Widgets API
+  properties:
+  - type: OpenAPI
+    url: openapi/diagnostic-robotics-widgets-api-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api
+  - type: GettingStarted
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication
+  - type: Authentication
+    url: authentication/diagnostic-robotics-authentication.yml
+  - type: OAuthScopes
+    url: scopes/diagnostic-robotics-scopes.yml
+  - type: ErrorCatalog
+    url: errors/diagnostic-robotics-problem-types.yml
+  - type: DataModel
+    url: data-model/diagnostic-robotics-data-model.yml
+  - type: Components
+    url: components/diagnostic-robotics-components.yml
+  - type: Sandbox
+    url: sandbox/diagnostic-robotics-sandbox.yml
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/6530c434c2f93-diagnostic-robotics-api
+  - type: Documentation
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
+  - type: APIReference
+    url: >-
+      https://docs.diagnosticrobotics.com/docs/patient-questionnaire-api/suy7vq94ei15e-search-service
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/diagnostic-robotics-precision-population-health-overlay.yaml
+- type: Overlay
+  url: overlays/diagnostic-robotics-patient-questionnaire-overlay.yaml
+- type: Overlay
+  url: overlays/diagnostic-robotics-symptom-search-overlay.yaml
 - type: Website
   url: https://diagnosticrobotics.com/
 - type: DeveloperPortal
