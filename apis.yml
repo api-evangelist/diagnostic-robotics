@@ -9,6 +9,18 @@ description: >-
   Population Health) API that ingests FHIR R4 US Core, CCLF and custom claims datasets and returns ranked risk
   lists, per-patient risk profiles, HCC/RAF risk-adjustment gaps and embeddable widgets. Access is OAuth 2.0
   client-credentials or API key and is provisioned per customer on a dedicated per-client subdomain.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://storage.googleapis.com/gpt-engineer-file-uploads/fKseK09ayVTXZOhSuXAlVH1splM2/social-images/social-1781800345789-Screenshot_2026-06-18_at_19.32.17.webp
 url: https://raw.githubusercontent.com/api-evangelist/diagnostic-robotics/refs/heads/main/apis.yml
 x-type: company
