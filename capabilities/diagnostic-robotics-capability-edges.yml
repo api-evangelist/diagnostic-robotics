@@ -1,0 +1,35 @@
+slug: diagnostic-robotics
+provider: Diagnostic Robotics
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Healthcare Providers
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Risk List API
+  spec_file: diagnostic-robotics-risk-list-api-api-openapi.yml
+  capability_id: BC-2880.10
+  capability_id_l1: BC-2880
+  capability_name: Risk Stratification & Identification
+  confidence: 0.78
+  evidence: GET /api/v2/RiskList 'Search Risk Lists'; schemas RiskList, RiskListMetadata, RiskListPatientItem
+  reason: Lists of patients produced by the vendor's predictive risk stratification, retrieved and exported
+    for population targeting — identification of rising-risk cohorts.
+- tag: Risk Profile
+  spec_file: diagnostic-robotics-risk-profile-api-openapi.yml
+  capability_id: BC-2880.10
+  capability_id_l1: BC-2880
+  capability_name: Risk Stratification & Identification
+  confidence: 0.7
+  evidence: GET /api/v2/RiskProfile/{patientId} 'Get Risk Profile'; schemas RiskProfile, ContributingFactor,
+    Driver, NextStep
+  reason: Per-patient predictive risk profile with contributing factors and drivers, plus disposition
+    of recommended next steps — risk stratification and identification. Next-step task handling introduces
+    some care-coordination ambiguity.
