@@ -1,0 +1,191 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Visits v2 API
+  version: 0.0.1
+  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+servers:
+- url: https://env-name.diagnosticrobotics.com/api/pq
+security:
+- apikey: []
+tags:
+- name: Visits v2
+  description: Patient visits resource
+paths:
+  /v2/visits/{visit_id}/:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+      operationId: get_get_visit_by_id_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+    patch:
+      responses:
+        '200':
+          description: Success
+      operationId: patch_get_visit_by_id_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+  /v2/visits/{visit_id}/finish:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      responses:
+        '200':
+          description: Success
+      description: Finalize visit and trigger "Questionnaire finished" webhooks
+      operationId: post_finished_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+  /v2/visits/{visit_id}/medical_summary:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+                description: Medical summary text
+                example: 45 year old female presents with sore throat that started 5 days ago...
+        '404':
+          description: Visit not found error
+      description: Get medical summary for visit
+      operationId: get_medical_summary_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+  /v2/visits/{visit_id}/outcomes:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OutcomeModel'
+        '404':
+          description: Visit not found error
+      description: Get questionnaire predicted outcomes
+      operationId: get_visit_outcomes_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+  /v2/visits/{visit_id}/symptoms/{symptom_id}:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: symptom_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    post:
+      responses:
+        '201':
+          description: Symptom added to visit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SymptomResponse'
+      description: Add a symptom to the current visit
+      operationId: post_symptoms_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Visits v2
+components:
+  schemas:
+    OutcomeModel:
+      properties:
+        outcome_id:
+          type: integer
+        weighted_priority:
+          type: string
+        type:
+          type: string
+        details:
+          type: string
+      type: object
+    SymptomResponse:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        medical_title:
+          type: string
+        title:
+          type: string
+      type: object
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: x-client
+      description: Client API key, provided by Diagnostic Robotics, must be supplied with any request

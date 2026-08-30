@@ -1,0 +1,218 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Widgets API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: Widgets API
+paths:
+  /api/v2/RiskList/{id}/_widget:
+    get:
+      tags:
+      - Widgets API
+      summary: Get Risk List Widget
+      description: Get risk list widget
+      operationId: get_risk_list_widget_api_v2_RiskList__id___widget_get
+      parameters:
+      - description: Risk list id.
+        required: true
+        schema:
+          title: Id
+          type: string
+          description: Risk list id.
+        example: a773fc5b078a4070a20122d7a2409d94
+        name: id
+        in: path
+      responses:
+        '204':
+          description: widget location
+          headers:
+            Location:
+              description: Widget URL
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: tjr35piq4va7q
+  /api/v2/RiskProfile/{patientId}/_widget:
+    get:
+      tags:
+      - Widgets API
+      summary: Get Risk Profile Widget
+      description: Get risk profile widget.
+      operationId: get_risk_profile_widget_api_v2_RiskProfile__patientId___widget_get
+      parameters:
+      - description: Patient id.
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient id.
+        example: MX938DJ8
+        name: patientId
+        in: path
+      responses:
+        '204':
+          description: widget location
+          headers:
+            Location:
+              description: Widget URL
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: gowwli7f7ppo5
+  /api/v2/PatientProfile/{patientId}/_widget:
+    get:
+      tags:
+      - Widgets API
+      summary: Get Patient Profile Widget
+      description: Get patient profile widget.
+      operationId: get_patient_profile_widget_api_v2_PatientProfile__patientId___widget_get
+      parameters:
+      - description: Patient id.
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient id.
+        example: MX938DJ8
+        name: patientId
+        in: path
+      responses:
+        '204':
+          description: widget location
+          headers:
+            Location:
+              description: Widget URL
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: 0e8c7thqeqaqo
+  /api/v2/RiskAdjustmentProfile/{patientId}/_widget:
+    get:
+      tags:
+      - Widgets API
+      summary: Get Patient Risk Adjustment Profile Widget
+      description: Get Risk Adjustment profile widget.
+      operationId: get_patient_risk_adjustment_profile_widget_api_v2_RiskAdjustmentProfile__patientId___widget_get
+      parameters:
+      - description: Patient id.
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient id.
+        example: MX938DJ8
+        name: patientId
+        in: path
+      responses:
+        '204':
+          description: widget location
+          headers:
+            Location:
+              description: Widget URL
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: mfjxc27be4q5d
+components:
+  schemas:
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c

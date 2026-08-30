@@ -1,0 +1,430 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Risk Profile API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: Risk Profile
+paths:
+  /api/v2/RiskProfile/{patientId}:
+    get:
+      tags:
+      - Risk Profile
+      summary: Get Risk Profile
+      description: Get risk profile data
+      operationId: get_risk_profile_api_v2_RiskProfile__patientId__get
+      parameters:
+      - description: Patient Id
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient Id
+        example: MX3DJ9VV
+        name: patientId
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskProfile'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: ms14m9mthq2jc
+  /api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$update:
+    post:
+      tags:
+      - Risk Profile
+      summary: Update Next Step
+      description: Update Next Step status.
+      operationId: update_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___update_post
+      parameters:
+      - description: Patient Id
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient Id
+        example: MX3DJ9VV
+        name: patientId
+        in: path
+      - description: Next Step Id
+        required: true
+        schema:
+          title: Nextstepid
+          type: string
+          description: Next Step Id
+        example: pcp_assign
+        name: nextStepId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Payload
+              allOf:
+              - $ref: '#/components/schemas/TaskUpdatePayload'
+              description: Task update payload
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: 9qvihcr49xdal
+  /api/v2/RiskProfile/{patientId}/NextStep/{nextStepId}/$ignore:
+    post:
+      tags:
+      - Risk Profile
+      summary: Ignore Next Step
+      description: Ignore Next Step.
+      operationId: ignore_next_step_api_v2_RiskProfile__patientId__NextStep__nextStepId___ignore_post
+      parameters:
+      - description: Patient Id
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient Id
+        example: a773fc5b078a4070a20122d7a2409d94
+        name: patientId
+        in: path
+      - description: Next Step Id
+        required: true
+        schema:
+          title: Nextstepid
+          type: string
+          description: Next Step Id
+        example: pcp_assign
+        name: nextStepId
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Payload
+              allOf:
+              - $ref: '#/components/schemas/TaskIgnorePayload'
+              description: Task ignore payload
+        required: true
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: rfxhtwurjnrqh
+components:
+  schemas:
+    RiskProfile:
+      title: RiskProfile
+      type: object
+      x-stoplight:
+        id: j6wpjheq262j5
+      required:
+      - patientId
+      - updateDate
+      - patient
+      - nextSteps
+      - drivers
+      - riskScore
+      properties:
+        patientId:
+          title: Patientid
+          type: string
+          description: Unique identifier of the patient .
+          example: MX938DJ8
+        updateDate:
+          title: Updatedate
+          type: string
+          description: The date when the risk list was last updated.
+          format: date
+        patient:
+          title: Patient
+          allOf:
+          - $ref: '#/components/schemas/PatientDetails'
+          description: Patient details.
+        nextSteps:
+          title: Nextsteps
+          type: array
+          description: Prioritized list of next steps.
+          items:
+            $ref: '#/components/schemas/NextStep'
+        drivers:
+          title: Drivers
+          type: array
+          description: Prioritized list of drivers.
+          items:
+            $ref: '#/components/schemas/Driver'
+        riskScore:
+          type: number
+          x-stoplight:
+            id: gcgp1lw0r9qv5
+          format: float
+          example: 99.99
+          description: The patient's overall health risk score.
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    NextStepStatus:
+      title: NextStepStatus
+      enum:
+      - suggested
+      - ignored
+      - accepted
+      - rejected
+      - cancelled
+      - on-hold
+      - failed
+      - in-progress
+      - completed
+      description: An enumeration.
+      x-stoplight:
+        id: gc9wb3hs3u0k4
+    ContributingFactor:
+      title: ContributingFactor
+      enum:
+      - Major
+      - Moderate
+      - Minor
+      description: An enumeration.
+      x-stoplight:
+        id: cohyoe78gl9p5
+    Driver:
+      title: Driver
+      required:
+      - id
+      - displayText
+      - category
+      - contributingFactor
+      - categoryDisplayText
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          example: male_afib_chadsvasc_high_risk_no_anti_coag
+        displayText:
+          title: Displaytext
+          type: string
+          example: Male with atrial fibrillation and CHA2DS2VASc score of 2 or more without anticoagulation medication
+        category:
+          title: Category
+          type: string
+          example: missing_treatment
+        contributingFactor:
+          $ref: '#/components/schemas/ContributingFactor'
+        count:
+          title: Count
+          type: integer
+        categoryDisplayText:
+          title: Categorydisplaytext
+          type: string
+          example: Missing treatment
+      x-stoplight:
+        id: uhplw6a9quiz6
+    PatientDetails:
+      title: PatientDetails
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the risk list.
+          example: MX938DJ8
+        firstName:
+          title: Firstname
+          type: string
+          description: First Name.
+          example: William
+        middleName:
+          title: Middlename
+          type: string
+          description: Middle Name.
+          example: Henry
+        lastName:
+          title: Lastname
+          type: string
+          description: Last Name.
+          example: Turner
+        dob:
+          title: Dob
+          type: string
+          description: Date of birth.
+          format: date
+          example: '1955-01-01'
+        state:
+          title: State
+          type: string
+          description: State.
+          example: CA
+      x-stoplight:
+        id: fqzi39kpbahnl
+    TaskIgnorePayload:
+      title: TaskIgnorePayload
+      required:
+      - reason
+      - duration
+      type: object
+      properties:
+        reason:
+          title: Reason
+          type: string
+          description: Reason for ignoring next step.
+          example: Patient is not eligible for this intervention.
+        duration:
+          title: Duration
+          type: integer
+          description: Duration to ignore next step in days.
+          example: 90
+      x-stoplight:
+        id: ew0071jji1xp3
+    NextStep:
+      title: NextStep
+      required:
+      - id
+      - status
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the next step.
+          example: review_medication
+        displayText:
+          title: Displaytext
+          type: string
+          description: Next step description.
+          default: ''
+          example: Refer to clinical pharmacologist consult or to PCP to review medications
+        contributingDrivers:
+          title: Contributingdrivers
+          type: array
+          items:
+            type: string
+          default: []
+          example:
+          - binary_diabetes_comorbidity_neurological_ever
+          - symptomatic_heart_failure
+        reference:
+          title: Reference
+          type: string
+          description: Reference in clinical literature for the suggested next step.
+        owner:
+          title: Owner
+          type: string
+          example: Care Coordinator
+        status:
+          $ref: '#/components/schemas/NextStepStatus'
+      x-stoplight:
+        id: yinjibtw2zmy4
+    TaskUpdatePayload:
+      title: TaskUpdatePayload
+      required:
+      - note
+      - status
+      type: object
+      properties:
+        note:
+          title: Note
+          type: string
+          description: Note for updating next step.
+          example: Patient has been assigned to PCP.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/NextStepStatus'
+          description: Status of next step.
+          example: in-progress
+      x-stoplight:
+        id: mq8peq141w8in
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c

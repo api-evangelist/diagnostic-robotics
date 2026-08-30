@@ -1,0 +1,357 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Risk List API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: Risk List API
+paths:
+  /api/v2/RiskList:
+    get:
+      tags:
+      - Risk List API
+      summary: Search Risk Lists
+      description: Search available risk lists
+      operationId: search_risk_lists_api_v2_RiskList_get
+      parameters:
+      - description: filter by product type
+        required: false
+        schema:
+          title: Product
+          type: array
+          items:
+            type: string
+          description: filter by product type
+        name: product
+        in: query
+      - description: filter by population
+        required: false
+        schema:
+          title: Population
+          type: array
+          items:
+            type: string
+          description: filter by population
+        name: population
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Search Risk Lists Api V2 Risklist Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiskListMetadata'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: 7zsv6xf0ln7qk
+  /api/v2/RiskList/{id}:
+    get:
+      tags:
+      - Risk List API
+      summary: Get Risk List
+      description: Get risk list
+      operationId: get_risk_list_api_v2_RiskList__id__get
+      parameters:
+      - description: risk list
+        required: true
+        schema:
+          title: Id
+          type: string
+          description: risk list
+        example: a773fc5b078a4070a20122d7a2409d94
+        name: id
+        in: path
+      - description: Offset
+        required: false
+        schema:
+          title: Offset
+          type: integer
+          description: Offset
+        name: offset
+        in: query
+      - description: Limit
+        required: false
+        schema:
+          title: Limit
+          type: integer
+          description: Limit
+        name: limit
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskList'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: 2b5cepcllvqd8
+  /api/v2/RiskList/{id}/$export:
+    get:
+      tags:
+      - Risk List API
+      summary: Export Risk List
+      description: Export risk list
+      operationId: export_risk_list_api_v2_RiskList__id___export_get
+      parameters:
+      - description: risk list
+        required: true
+        schema:
+          title: Id
+          type: string
+          description: risk list
+        example: a773fc5b078a4070a20122d7a2409d94
+        name: id
+        in: path
+      responses:
+        '200':
+          description: Risk list File
+          content:
+            application/x-ndjson: {}
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: p89zz0jysuu25
+components:
+  schemas:
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    RiskList:
+      title: RiskList
+      required:
+      - metadata
+      - total
+      - offset
+      - entities
+      type: object
+      properties:
+        metadata:
+          title: Metadata
+          allOf:
+          - $ref: '#/components/schemas/RiskListMetadata'
+          description: Risk list metadata.
+        total:
+          title: Total
+          type: integer
+          description: Size
+          example: 34
+        offset:
+          title: Offset
+          type: integer
+          description: Size
+          example: 0
+        entities:
+          title: Entities
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskListPatientItem'
+          description: List of patients in the risk list.
+      x-stoplight:
+        id: e3wu3wiwz456y
+    RiskListMetadata:
+      title: RiskListMetadata
+      required:
+      - id
+      - updateDate
+      - serveDate
+      - population
+      - product
+      - url
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the risk list.
+          example: a773fc5b078a4070a20122d7a2409d94
+        updateDate:
+          title: Updatedate
+          type: string
+          description: The date when the risk list was last updated.
+          format: date
+        serveDate:
+          title: Servedate
+          type: string
+          description: The data cutoff date.
+          format: date
+        population:
+          title: Population
+          type: string
+          description: Population of the list.
+          example: DCE
+        product:
+          title: Product
+          type: string
+          description: Risk list Product.
+          example: PREVENTABLE
+        url:
+          title: Url
+          type: string
+          description: Risk list location.
+          example: api/v2/RiskList/a773fc5b078a4070a20122d7a2409d94
+      x-stoplight:
+        id: cracaemvdsqjf
+    PatientDetails:
+      title: PatientDetails
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the risk list.
+          example: MX938DJ8
+        firstName:
+          title: Firstname
+          type: string
+          description: First Name.
+          example: William
+        middleName:
+          title: Middlename
+          type: string
+          description: Middle Name.
+          example: Henry
+        lastName:
+          title: Lastname
+          type: string
+          description: Last Name.
+          example: Turner
+        dob:
+          title: Dob
+          type: string
+          description: Date of birth.
+          format: date
+          example: '1955-01-01'
+        state:
+          title: State
+          type: string
+          description: State.
+          example: CA
+      x-stoplight:
+        id: fqzi39kpbahnl
+    RiskListPatientItem:
+      title: RiskListPatientItem
+      required:
+      - patientId
+      - patient
+      - riskScore
+      - riskProfileUrl
+      - patientProfileUrl
+      type: object
+      properties:
+        patientId:
+          title: Patientid
+          type: string
+          description: Unique identifier for the patient.
+          example: MX938DJ8
+        patient:
+          title: Patient
+          allOf:
+          - $ref: '#/components/schemas/PatientDetails'
+          description: Patient details.
+        riskScore:
+          title: Riskscore
+          type: number
+          description: Risk score.
+          example: 97.6
+        riskProfileUrl:
+          title: Riskprofileurl
+          type: string
+          description: Location of the patient risk profile.
+          example: api/v2/RiskProfile/MX938DJ8
+        patientProfileUrl:
+          title: Patientprofileurl
+          type: string
+          description: Location of the patient profile.
+          example: api/v2/PatientProfile/MX938DJ8
+      x-stoplight:
+        id: rans8hib5imnv
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c

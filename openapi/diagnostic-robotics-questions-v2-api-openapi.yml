@@ -1,0 +1,175 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Questions v2 API
+  version: 0.0.1
+  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+servers:
+- url: https://env-name.diagnosticrobotics.com/api/pq
+security:
+- apikey: []
+tags:
+- name: Questions v2
+  description: Questions resource
+paths:
+  /v2/visits/{visit_id}/questions/first_unanswered:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionIdentifier'
+      description: Get first seed
+      operationId: get_questions_first_unanswered_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Questions v2
+  /v2/visits/{visit_id}/questions/{seed}:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: seed
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetQuestionResponse'
+      description: Get question details by seed
+      operationId: get_question_by_seed_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Questions v2
+  /v2/visits/{visit_id}/questions/{seed}/respond:
+    parameters:
+    - name: visit_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: seed
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      responses:
+        '201':
+          description: Question Answered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnswerQuestionResponse'
+        '400':
+          description: Invalid seed
+      description: Answer a question
+      operationId: post_question_response_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Questions v2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnswerQuestionRequest'
+        required: true
+components:
+  schemas:
+    Question:
+      properties:
+        title:
+          type: string
+        answers:
+          type: object
+          x-sl-internally-excluded: true
+          x-sl-error-message: You do not have permission to view this reference
+        type:
+          type: string
+          example: single answer
+          enum:
+          - single answer
+          - checklist
+          - checklist
+          - duration
+          - open-text
+          - attachment
+          - polar
+          - scale
+          - numeric
+          - temprature
+          - blood-pressure
+          - pain-scale
+      type: object
+    AnswerQuestionRequest:
+      properties:
+        response:
+          type: object
+          x-sl-internally-excluded: true
+          x-sl-error-message: You do not have permission to view this reference
+      type: object
+    AnswerQuestionResponse:
+      properties:
+        seed:
+          type: string
+          description: a state string saving the current state of the questionnaire
+        next_question_seed:
+          type: string
+          description: the state of the next question, you will recive a new state object for any response sent
+      type: object
+    QuestionIdentifier:
+      properties:
+        seed:
+          type: string
+          example: d94Jv39
+      type: object
+    GetQuestionResponse:
+      properties:
+        question:
+          $ref: '#/components/schemas/Question'
+        current_index:
+          type: integer
+          description: current question index, used for progress indication
+        total_questions:
+          type: integer
+          description: estimated total number of questions, used for progress indication
+      type: object
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: x-client
+      description: Client API key, provided by Diagnostic Robotics, must be supplied with any request

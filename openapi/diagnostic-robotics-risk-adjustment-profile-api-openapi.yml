@@ -1,0 +1,423 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Risk Adjustment Profile API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: Risk Adjustment Profile
+paths:
+  /api/v2/RiskAdjustmentProfile/{patientId}/diagnoses:
+    patch:
+      tags:
+      - Risk Adjustment Profile
+      summary: Update Diagnoses
+      operationId: update_diagnoses_api_v2_RiskAdjustmentProfile__patientId__diagnoses_patch
+      security:
+      - OAuth2AuthorizationCodeBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          title: Patientid
+          description: Patient Id
+          type: string
+        description: Patient Id
+        example: MX3DJ9VV
+      - name: icd_codes
+        in: query
+        required: true
+        schema:
+          title: Icd Codes
+          description: Update by one or more icd codes
+          required: true
+          type: array
+          items:
+            type: string
+        description: Update by one or more icd codes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDiagnosesPayload'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-stoplight:
+        id: o83dddrmidk75
+  /api/v2/RiskAdjustmentProfile/{patientId}:
+    get:
+      tags:
+      - Risk Adjustment Profile
+      summary: Get Patient Raf Gaps Data By Patient Id
+      description: Get risk adjustment profile for a patient
+      operationId: get_patient_raf_gaps_data_by_patient_id_api_v2_RiskAdjustmentProfile__patientId__get
+      parameters:
+      - description: Patient Id
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient Id
+        example: MX3DJ9VV
+        name: patientId
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientRiskAdjustmentProfileResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2AuthorizationCodeBearer: []
+      x-stoplight:
+        id: h5oyykkh018wj
+components:
+  schemas:
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    UpdateIcdPayload:
+      title: UpdateIcdPayload
+      required:
+      - icdCode
+      - status
+      type: object
+      properties:
+        icdCode:
+          title: Icdcode
+          type: string
+          description: ICD code.
+          example: F01
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: Status of the ICD code.
+          example: Accepted
+      x-stoplight:
+        id: stdop502wlz3z
+    PatientIcdSuggestionResponse:
+      title: PatientIcdSuggestionResponse
+      required:
+      - code
+      - description
+      - status
+      - reason
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: ICD code.
+          example: F01
+        description:
+          title: Description
+          type: string
+          description: ICD description.
+          example: Vascular dementia
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: Status of the ICD code.
+        reason:
+          title: Reason
+          type: array
+          items:
+            $ref: '#/components/schemas/Reason'
+          description: Reason for the suggestion.
+      x-stoplight:
+        id: jv4x9ijca1cap
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+    PatientRiskAdjustmentProfileResponse:
+      title: PatientRiskAdjustmentProfileResponse
+      required:
+      - patient
+      - codedRiskScore
+      - uncodedRiskScore
+      - codedConditions
+      - uncodedConditions
+      - meta
+      type: object
+      properties:
+        patient:
+          title: Patient
+          type: string
+          description: Unique identifier of the patient.
+          example: MX938DJ8
+        codedRiskScore:
+          title: Codedriskscore
+          type: number
+          description: HCC Risk score of the patient.
+          example: 1.8
+        uncodedRiskScore:
+          title: Uncodedriskscore
+          type: number
+          description: Uncoded HCC Risk score gap of the patient.
+          example: 0.3
+        codedConditions:
+          title: Codedconditions
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientHccResponse'
+          description: Coded diagnoses for the patient.
+        uncodedConditions:
+          title: Uncodedconditions
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientHccRecommendationResponse'
+          description: Suggested diagnoses for the patient.
+        meta:
+          title: Meta
+          allOf:
+          - $ref: '#/components/schemas/Meta'
+          description: The metadata about the resource.
+      x-stoplight:
+        id: 9kz3cpfom4z2p
+    PatientHccRecommendationResponse:
+      title: PatientHccRecommendationResponse
+      required:
+      - code
+      - value
+      - description
+      - version
+      - diagnoses
+      - status
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: HCC code.
+          example: HCC51
+        value:
+          title: Value
+          type: number
+          description: HCC value.
+          example: 0.346
+        description:
+          title: Description
+          type: string
+          description: HCC description.
+          example: Dementia with Complications
+        version:
+          title: Version
+          type: string
+          description: HCC version.
+          example: V24
+        diagnoses:
+          title: Diagnoses
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientIcdSuggestionResponse'
+          description: ICD codes for the HCC.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: Status of the HCC suggestion.
+      x-stoplight:
+        id: z4nifw5dt46wx
+    PatientHccResponse:
+      title: PatientHccResponse
+      required:
+      - code
+      - value
+      - description
+      - version
+      - diagnoses
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: HCC code.
+          example: HCC51
+        value:
+          title: Value
+          type: number
+          description: HCC value.
+          example: 0.346
+        description:
+          title: Description
+          type: string
+          description: HCC description.
+          example: Dementia with Complications
+        version:
+          title: Version
+          type: string
+          description: HCC version.
+          example: V24
+        diagnoses:
+          title: Diagnoses
+          type: array
+          items:
+            $ref: '#/components/schemas/CodedPatientIcdResponse'
+          description: ICD codes for the HCC.
+      x-stoplight:
+        id: flg1u3uh1y43h
+    CodedPatientIcdResponse:
+      title: CodedPatientIcdResponse
+      required:
+      - code
+      - description
+      - documentedDate
+      - providerNpiId
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: ICD code.
+          example: F01
+        description:
+          title: Description
+          type: string
+          description: ICD description.
+          example: Vascular dementia
+        documentedDate:
+          title: Documenteddate
+          type: string
+          description: Documented date.
+          format: date
+          example: '2021-01-01'
+        providerNpiId:
+          title: Providernpiid
+          type: string
+          description: Provider NPI ID.
+          example: '1234567890'
+      x-stoplight:
+        id: qj2ie9pj8l3o8
+    Meta:
+      title: Meta
+      required:
+      - lastUpdated
+      type: object
+      properties:
+        lastUpdated:
+          title: Lastupdated
+          type: string
+          description: When the resource version last changed.
+          format: date
+          example: '2021-01-01'
+      x-stoplight:
+        id: zeujhv44clhhb
+    Reason:
+      title: Reason
+      required:
+      - source
+      - reason
+      - evidence
+      type: object
+      properties:
+        source:
+          title: Source
+          type: string
+          description: Source of recommendation.
+          example: Claims
+        reason:
+          title: Reason
+          type: string
+          description: Reason for the recommendation.
+          example: Coded in previous year
+        evidence:
+          title: Evidence
+          type: string
+          description: Evidence for the recommendation.
+          example: "Emmett L Brown, MD\n Coded 10/31/2015"
+      x-stoplight:
+        id: 77jtczugyjim0
+    UpdateDiagnosesPayload:
+      title: UpdateDiagnosesPayload
+      required:
+      - diagnoses
+      type: object
+      properties:
+        diagnoses:
+          title: Diagnoses
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateIcdPayload'
+          description: List of diagnoses to update.
+      x-stoplight:
+        id: 6ogt2atcsn0j2
+    Status:
+      title: Status
+      enum:
+      - Accepted
+      - Discarded
+      - Pending
+      - Open
+      type: string
+      description: An enumeration.
+      x-stoplight:
+        id: l0dgk8wx8e14d
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c

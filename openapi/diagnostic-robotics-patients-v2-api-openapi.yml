@@ -1,0 +1,147 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Patients v2 API
+  version: 0.0.1
+  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+servers:
+- url: https://env-name.diagnosticrobotics.com/api/pq
+security:
+- apikey: []
+tags:
+- name: Patients v2
+  description: Patients resource
+paths:
+  /v2/patients/:
+    post:
+      responses:
+        '201':
+          description: Patient Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePatientResponse'
+      description: Create a patient with basic demographic data
+      operationId: post_patient_list_resource
+      tags:
+      - Patients v2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePatientRequest'
+        required: true
+  /v2/patients/{patient_id}:
+    parameters:
+    - name: patient_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      responses:
+        '200':
+          description: Patient found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePatientResponse'
+        '404':
+          description: Patient not found
+      description: Get patient with basic demographic data
+      operationId: get_get_patient_resource
+      parameters:
+      - name: external
+        in: query
+        schema:
+          type: boolean
+      tags:
+      - Patients v2
+  /v2/patients/{patient_id}/visits:
+    parameters:
+    - name: patient_id
+      in: path
+      required: true
+      schema:
+        type: string
+    post:
+      responses:
+        '201':
+          description: Visit Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVisitResponse'
+      description: Create new visit for a patient
+      operationId: post_create_visit_to_patient_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Patients v2
+    get:
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateVisitResponse'
+        '404':
+          description: Patient not found error
+      description: Query all active visits for a patient
+      operationId: get_create_visit_to_patient_resource
+      parameters:
+      - in: header
+        required: true
+        description: Patient unique identifier, provided when creating a new patient, must be supplied with any request as Bearer token
+        name: Authorization
+        schema:
+          type: string
+      tags:
+      - Patients v2
+components:
+  schemas:
+    CreatePatientResponse:
+      properties:
+        uid:
+          type: string
+        age:
+          type: integer
+          minimum: 0
+        sex:
+          type: string
+          example: M
+          enum:
+          - M
+          - F
+      type: object
+    CreateVisitResponse:
+      properties:
+        id:
+          type: string
+      type: object
+    CreatePatientRequest:
+      properties:
+        age:
+          type: integer
+          minimum: 0
+        sex:
+          type: string
+          example: M
+          enum:
+          - M
+          - F
+        external_source_id:
+          type: string
+          description: External id of patient in the soruce system
+      type: object
+  securitySchemes:
+    apikey:
+      type: apiKey
+      in: header
+      name: x-client
+      description: Client API key, provided by Diagnostic Robotics, must be supplied with any request

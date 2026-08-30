@@ -1,0 +1,126 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics API Auth API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: API Auth
+paths:
+  /api/oauth/token:
+    post:
+      tags:
+      - API Auth
+      summary: Login For Access Token
+      operationId: login_for_access_token_api_oauth_token_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_login_for_access_token_api_oauth_token_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      x-stoplight:
+        id: nelm99m844td2
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      required:
+      - access_token
+      - token_type
+      type: object
+      properties:
+        access_token:
+          title: Access Token
+          type: string
+        token_type:
+          title: Token Type
+          type: string
+      x-stoplight:
+        id: tlvdujnigq33o
+    Body_login_for_access_token_api_oauth_token_post:
+      title: Body_login_for_access_token_api_oauth_token_post
+      required:
+      - client_id
+      - client_secret
+      type: object
+      properties:
+        grant_type:
+          title: Grant Type
+          type: string
+        scope:
+          title: Scope
+          type: string
+          default: ''
+        client_id:
+          title: Client Id
+          type: string
+        client_secret:
+          title: Client Secret
+          type: string
+      x-stoplight:
+        id: x326lqe0ar1sb
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c

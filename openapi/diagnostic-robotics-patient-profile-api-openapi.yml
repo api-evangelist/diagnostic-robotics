@@ -1,0 +1,196 @@
+openapi: 3.2.0
+info:
+  title: Diagnostic Robotics Patient Profile API
+  version: 2.3.35
+servers:
+- url: https://sandbox.precision-population-health.diagnosticrobotics.com
+  description: Sandbox
+tags:
+- name: Patient Profile
+paths:
+  /api/v2/PatientProfile/{patientId}:
+    get:
+      tags:
+      - Patient Profile
+      summary: Get Patient Profile
+      description: Get patient profile data
+      operationId: get_patient_profile_api_v2_PatientProfile__patientId__get
+      parameters:
+      - description: Patient Id
+        required: true
+        schema:
+          title: Patientid
+          type: string
+          description: Patient Id
+        example: MX938DJ8
+        name: patientId
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientProfile'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - OAuth2PasswordBearer: []
+      x-stoplight:
+        id: s4g1mu2oona9d
+components:
+  schemas:
+    PatientProfile:
+      title: PatientProfile
+      required:
+      - patientId
+      - updateDate
+      - patient
+      - sections
+      type: object
+      properties:
+        patientId:
+          title: Patientid
+          type: string
+          description: Unique identifier of the patient .
+          example: MX938DJ8
+        updateDate:
+          title: Updatedate
+          type: string
+          description: The date when the patient information was last updated.
+          format: date
+        patient:
+          title: Patient
+          allOf:
+          - $ref: '#/components/schemas/PatientDetails'
+          description: Patient details.
+        sections:
+          title: Sections
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientInformationSection'
+          description: List of patient information sections.
+      x-stoplight:
+        id: pzgj9u62xcj3b
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    PatientDetails:
+      title: PatientDetails
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the risk list.
+          example: MX938DJ8
+        firstName:
+          title: Firstname
+          type: string
+          description: First Name.
+          example: William
+        middleName:
+          title: Middlename
+          type: string
+          description: Middle Name.
+          example: Henry
+        lastName:
+          title: Lastname
+          type: string
+          description: Last Name.
+          example: Turner
+        dob:
+          title: Dob
+          type: string
+          description: Date of birth.
+          format: date
+          example: '1955-01-01'
+        state:
+          title: State
+          type: string
+          description: State.
+          example: CA
+      x-stoplight:
+        id: fqzi39kpbahnl
+    PatientInformationSection:
+      title: PatientInformationSection
+      required:
+      - sectionHeader
+      - sectionBody
+      type: object
+      properties:
+        sectionHeader:
+          title: Sectionheader
+          type: string
+          description: Section header.
+          example: Demographics
+        sectionBody:
+          title: Sectionbody
+          type: string
+          description: Section body text in Markdown format.
+          example: 'Age: 65
+
+            Gender: Male
+
+            Race: White'
+      x-stoplight:
+        id: 2e0sm7kfzwetc
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: /api/oauth/token
+    OAuth2AuthorizationCodeBearer:
+      type: oauth2
+      flows:
+        authorizationCode:
+          scopes: {}
+          authorizationUrl: https://digital-outreach.us.auth0.com/authorize?audience=dev-digital-outreach-api-identifier
+          tokenUrl: https://digital-outreach.us.auth0.com/oauth/token
+x-stoplight:
+  id: usgko1x40nf1c
