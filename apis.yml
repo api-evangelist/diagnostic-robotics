@@ -30,17 +30,17 @@ created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Health
-- Healthcare
-- Clinical AI
-- Population Health
-- Risk Adjustment
-- Predictive Analytics
+- healthcare
+- clinical-ai
+- population-health
+- risk-adjustment
+- predictive-analytics
 - triage
-- FHIR
-- Claims Data
-- Care Management
-- Payers
-- Medical Coding
+- fhir
+- claims-data
+- care-management
+- payers
+- medical-coding
 tags_raw:
 - health
 - healthcare
@@ -62,6 +62,8 @@ apis:
     https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
+  - Api Auth
+  tags_raw:
   - API Auth
   properties:
   - type: OpenAPI
@@ -150,7 +152,8 @@ apis:
   humanURL: >-
     https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
-  tags:
+  tags: []
+  tags_raw:
   - default
   properties:
   - type: OpenAPI
