@@ -30,17 +30,17 @@ created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Health
-- healthcare
-- clinical-ai
-- population-health
-- risk-adjustment
-- predictive-analytics
+- Healthcare
+- Clinical AI
+- Population Health
+- Risk Adjustment
+- Predictive Analytics
 - triage
-- fhir
-- claims-data
-- care-management
-- payers
-- medical-coding
+- FHIR
+- Claims Data
+- Care Management
+- Payers
+- Medical Coding
 tags_raw:
 - health
 - healthcare
