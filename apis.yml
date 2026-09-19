@@ -79,7 +79,7 @@ apis:
     https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/i9a7jv9vscbxk-offering-overview
   baseURL: https://sandbox.precision-population-health.diagnosticrobotics.com
   tags:
-  - Api Auth
+  - API Auth
   tags_raw:
   - API Auth
   properties:
