@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 1
+edge_count: 2
 edges:
 - tag: Risk List API
   spec_file: diagnostic-robotics-risk-list-api-api-openapi.yml
@@ -22,3 +22,15 @@ edges:
   evidence: GET /api/v2/RiskList — "Search Risk Lists"; schemas RiskList, RiskListPatientItem, RiskListMetadata
   reason: Lists of patients produced by predictive risk models, matching Risk Stratification & Identification
     for attributed populations, consistent with the vendor's "predictive risk stratification" description.
+- tag: Risk Profile
+  spec_file: diagnostic-robotics-risk-profile-api-openapi.yml
+  capability_id: BC-2880.10
+  capability_id_l1: BC-2880
+  capability_name: Risk Stratification & Identification
+  confidence: 0.7
+  evidence: GET /api/v2/RiskProfile/{patientId} 'Get Risk Profile'; schemas RiskProfile, ContributingFactor,
+    Driver, NextStep
+  reason: Per-patient predictive risk profile with contributing factors and drivers, plus disposition
+    of recommended next steps — risk stratification and identification. Next-step task handling introduces
+    some care-coordination ambiguity.
+  recovered_from: healthcare-vertical-edges.json
