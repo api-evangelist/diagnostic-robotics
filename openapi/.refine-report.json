@@ -1,0 +1,57 @@
+{
+  "provider": "diagnostic-robotics",
+  "sources": [
+    "_original/diagnostic-robotics-patient-questionnaire-openapi.json",
+    "_original/diagnostic-robotics-precision-population-health-openapi.json",
+    "_original/diagnostic-robotics-symptom-search-openapi.json"
+  ],
+  "outputs": [
+    "diagnostic-robotics-patients-v2-api-openapi.yml",
+    "diagnostic-robotics-questions-v2-api-openapi.yml",
+    "diagnostic-robotics-visits-v2-api-openapi.yml",
+    "diagnostic-robotics-api-auth-api-openapi.yml",
+    "diagnostic-robotics-dataset-upload-api-api-openapi.yml",
+    "diagnostic-robotics-patient-profile-api-openapi.yml",
+    "diagnostic-robotics-risk-adjustment-profile-api-openapi.yml",
+    "diagnostic-robotics-risk-list-api-api-openapi.yml",
+    "diagnostic-robotics-risk-profile-api-openapi.yml",
+    "diagnostic-robotics-widgets-api-api-openapi.yml",
+    "diagnostic-robotics-visits-api-openapi.yml",
+    "diagnostic-robotics-default-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "3 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "diagnostic-robotics-patient-questionnaire-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "diagnostic-robotics-precision-population-health-openapi.json: upgraded openapi 3.0.2 -> OpenAPI 3.2.0",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: API Auth",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Dataset Upload API",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Patient Profile",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Risk Adjustment Profile",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Risk List API",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Risk Profile",
+    "diagnostic-robotics-precision-population-health-openapi.json: declared missing tag: Widgets API",
+    "diagnostic-robotics-symptom-search-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/diagnostic-robotics-symptom-search-openapi.yml: archived document superseded by a larger archived document",
+    "_original/diagnostic-robotics-precision-population-health-openapi.yml: archived document superseded by a larger archived document",
+    "_original/diagnostic-robotics-patient-questionnaire-openapi.yml: archived document superseded by a larger archived document",
+    "diagnostic-robotics-api-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-dataset-upload-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-patient-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-patients-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-questions-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-risk-adjustment-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-risk-list-api-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-risk-profile-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-visits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-visits-v2-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "diagnostic-robotics-widgets-api-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

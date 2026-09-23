@@ -82,17 +82,6 @@ components:
           description: List of patient information sections.
       x-stoplight:
         id: pzgj9u62xcj3b
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
     PatientDetails:
       title: PatientDetails
       required:
@@ -132,29 +121,6 @@ components:
           example: CA
       x-stoplight:
         id: fqzi39kpbahnl
-    PatientInformationSection:
-      title: PatientInformationSection
-      required:
-      - sectionHeader
-      - sectionBody
-      type: object
-      properties:
-        sectionHeader:
-          title: Sectionheader
-          type: string
-          description: Section header.
-          example: Demographics
-        sectionBody:
-          title: Sectionbody
-          type: string
-          description: Section body text in Markdown format.
-          example: 'Age: 65
-
-            Gender: Male
-
-            Race: White'
-      x-stoplight:
-        id: 2e0sm7kfzwetc
     ValidationError:
       title: ValidationError
       required:
@@ -178,6 +144,40 @@ components:
           type: string
       x-stoplight:
         id: ch4ho5h51hq0x
+    PatientInformationSection:
+      title: PatientInformationSection
+      required:
+      - sectionHeader
+      - sectionBody
+      type: object
+      properties:
+        sectionHeader:
+          title: Sectionheader
+          type: string
+          description: Section header.
+          example: Demographics
+        sectionBody:
+          title: Sectionbody
+          type: string
+          description: Section body text in Markdown format.
+          example: 'Age: 65
+
+            Gender: Male
+
+            Race: White'
+      x-stoplight:
+        id: 2e0sm7kfzwetc
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

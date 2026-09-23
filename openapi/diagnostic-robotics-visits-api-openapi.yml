@@ -2,7 +2,32 @@ openapi: 3.2.0
 info:
   title: Search Service Visits API
   version: 0.0.1
-  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+  description: 'Diagnostic Robotics API Document
+
+
+    This document describing the API of patient-questionnaire service.
+
+
+    High level description of the flow:
+
+    1. create a patient
+
+    2. create a visit for the patient
+
+    3. select questionnaire for the visit
+
+    4. get first (or next) question
+
+    5. answer the question
+
+    6. repeat 4-5 until answered all questions
+
+    7. finalize the visit
+
+    8. get visit outcome - triage results
+
+
+    API key should be included in all requests.'
 servers:
 - url: https://env-name.diagnosticrobotics.com/api/search/
 security:
@@ -42,6 +67,8 @@ paths:
           type: string
       tags:
       - Visits
+      summary: Get symptom search resource
+      x-summary-source: derived
 components:
   schemas:
     Symptom:

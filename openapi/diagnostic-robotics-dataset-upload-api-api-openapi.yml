@@ -64,17 +64,6 @@ paths:
         id: gwt2ghnrxf283
 components:
   schemas:
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
     ValidationError:
       title: ValidationError
       required:
@@ -110,6 +99,17 @@ components:
           format: binary
       x-stoplight:
         id: vx4sbohvbgo19
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

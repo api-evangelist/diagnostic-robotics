@@ -2,7 +2,32 @@ openapi: 3.2.0
 info:
   title: Diagnostic Robotics Visits v2 API
   version: 0.0.1
-  description: "\nDiagnostic Robotics API Document\n\nThis document describing the API of patient-questionnaire service.\n\nHigh level description of the flow:\n 1. create a patient\n 2. create a visit for the patient\n 3. select questionnaire for the visit\n 4. get first (or next) question\n 5. answer the question\n 6. repeat 4-5 until answered all questions\n 7. finalize the visit\n 8. get visit outcome - triage results\n\nAPI key should be included in all requests.\n"
+  description: 'Diagnostic Robotics API Document
+
+
+    This document describing the API of patient-questionnaire service.
+
+
+    High level description of the flow:
+
+    1. create a patient
+
+    2. create a visit for the patient
+
+    3. select questionnaire for the visit
+
+    4. get first (or next) question
+
+    5. answer the question
+
+    6. repeat 4-5 until answered all questions
+
+    7. finalize the visit
+
+    8. get visit outcome - triage results
+
+
+    API key should be included in all requests.'
 servers:
 - url: https://env-name.diagnosticrobotics.com/api/pq
 security:
@@ -32,6 +57,8 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Get get visit by id resource
+      x-summary-source: derived
     patch:
       responses:
         '200':
@@ -46,6 +73,8 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Patch get visit by id resource
+      x-summary-source: derived
   /v2/visits/{visit_id}/finish:
     parameters:
     - name: visit_id
@@ -68,6 +97,8 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Post finished resource
+      x-summary-source: derived
   /v2/visits/{visit_id}/medical_summary:
     parameters:
     - name: visit_id
@@ -98,6 +129,8 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Get medical summary resource
+      x-summary-source: derived
   /v2/visits/{visit_id}/outcomes:
     parameters:
     - name: visit_id
@@ -126,6 +159,8 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Get visit outcomes resource
+      x-summary-source: derived
   /v2/visits/{visit_id}/symptoms/{symptom_id}:
     parameters:
     - name: visit_id
@@ -157,19 +192,10 @@ paths:
           type: string
       tags:
       - Visits v2
+      summary: Post symptoms resource
+      x-summary-source: derived
 components:
   schemas:
-    OutcomeModel:
-      properties:
-        outcome_id:
-          type: integer
-        weighted_priority:
-          type: string
-        type:
-          type: string
-        details:
-          type: string
-      type: object
     SymptomResponse:
       properties:
         id:
@@ -181,6 +207,17 @@ components:
         medical_title:
           type: string
         title:
+          type: string
+      type: object
+    OutcomeModel:
+      properties:
+        outcome_id:
+          type: integer
+        weighted_priority:
+          type: string
+        type:
+          type: string
+        details:
           type: string
       type: object
   securitySchemes:
