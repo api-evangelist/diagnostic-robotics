@@ -37,28 +37,6 @@ paths:
         id: nelm99m844td2
 components:
   schemas:
-    Body_login_for_access_token_api_oauth_token_post:
-      title: Body_login_for_access_token_api_oauth_token_post
-      required:
-      - client_id
-      - client_secret
-      type: object
-      properties:
-        grant_type:
-          title: Grant Type
-          type: string
-        scope:
-          title: Scope
-          type: string
-          default: ''
-        client_id:
-          title: Client Id
-          type: string
-        client_secret:
-          title: Client Secret
-          type: string
-      x-stoplight:
-        id: x326lqe0ar1sb
     ValidationError:
       title: ValidationError
       required:
@@ -82,17 +60,6 @@ components:
           type: string
       x-stoplight:
         id: ch4ho5h51hq0x
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
     TokenResponse:
       title: TokenResponse
       required:
@@ -108,6 +75,39 @@ components:
           type: string
       x-stoplight:
         id: tlvdujnigq33o
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    Body_login_for_access_token_api_oauth_token_post:
+      title: Body_login_for_access_token_api_oauth_token_post
+      required:
+      - client_id
+      - client_secret
+      type: object
+      properties:
+        grant_type:
+          title: Grant Type
+          type: string
+        scope:
+          title: Scope
+          type: string
+          default: ''
+        client_id:
+          title: Client Id
+          type: string
+        client_secret:
+          title: Client Secret
+          type: string
+      x-stoplight:
+        id: x326lqe0ar1sb
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

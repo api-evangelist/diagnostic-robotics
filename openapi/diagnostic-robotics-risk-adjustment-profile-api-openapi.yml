@@ -99,106 +99,6 @@ paths:
         id: h5oyykkh018wj
 components:
   schemas:
-    Status:
-      title: Status
-      enum:
-      - Accepted
-      - Discarded
-      - Pending
-      - Open
-      type: string
-      description: An enumeration.
-      x-stoplight:
-        id: l0dgk8wx8e14d
-    PatientIcdSuggestionResponse:
-      title: PatientIcdSuggestionResponse
-      required:
-      - code
-      - description
-      - status
-      - reason
-      type: object
-      properties:
-        code:
-          title: Code
-          type: string
-          description: ICD code.
-          example: F01
-        description:
-          title: Description
-          type: string
-          description: ICD description.
-          example: Vascular dementia
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          description: Status of the ICD code.
-        reason:
-          title: Reason
-          type: array
-          items:
-            $ref: '#/components/schemas/Reason'
-          description: Reason for the suggestion.
-      x-stoplight:
-        id: jv4x9ijca1cap
-    Reason:
-      title: Reason
-      required:
-      - source
-      - reason
-      - evidence
-      type: object
-      properties:
-        source:
-          title: Source
-          type: string
-          description: Source of recommendation.
-          example: Claims
-        reason:
-          title: Reason
-          type: string
-          description: Reason for the recommendation.
-          example: Coded in previous year
-        evidence:
-          title: Evidence
-          type: string
-          description: Evidence for the recommendation.
-          example: "Emmett L Brown, MD\n Coded 10/31/2015"
-      x-stoplight:
-        id: 77jtczugyjim0
-    UpdateDiagnosesPayload:
-      title: UpdateDiagnosesPayload
-      required:
-      - diagnoses
-      type: object
-      properties:
-        diagnoses:
-          title: Diagnoses
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateIcdPayload'
-          description: List of diagnoses to update.
-      x-stoplight:
-        id: 6ogt2atcsn0j2
-    UpdateIcdPayload:
-      title: UpdateIcdPayload
-      required:
-      - icdCode
-      - status
-      type: object
-      properties:
-        icdCode:
-          title: Icdcode
-          type: string
-          description: ICD code.
-          example: F01
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          description: Status of the ICD code.
-          example: Accepted
-      x-stoplight:
-        id: stdop502wlz3z
     PatientHccResponse:
       title: PatientHccResponse
       required:
@@ -237,29 +137,6 @@ components:
           description: ICD codes for the HCC.
       x-stoplight:
         id: flg1u3uh1y43h
-    ValidationError:
-      title: ValidationError
-      required:
-      - loc
-      - msg
-      - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      x-stoplight:
-        id: ch4ho5h51hq0x
     CodedPatientIcdResponse:
       title: CodedPatientIcdResponse
       required:
@@ -292,31 +169,6 @@ components:
           example: '1234567890'
       x-stoplight:
         id: qj2ie9pj8l3o8
-    Meta:
-      title: Meta
-      required:
-      - lastUpdated
-      type: object
-      properties:
-        lastUpdated:
-          title: Lastupdated
-          type: string
-          description: When the resource version last changed.
-          format: date
-          example: '2021-01-01'
-      x-stoplight:
-        id: zeujhv44clhhb
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
     PatientHccRecommendationResponse:
       title: PatientHccRecommendationResponse
       required:
@@ -360,6 +212,68 @@ components:
           description: Status of the HCC suggestion.
       x-stoplight:
         id: z4nifw5dt46wx
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+    Reason:
+      title: Reason
+      required:
+      - source
+      - reason
+      - evidence
+      type: object
+      properties:
+        source:
+          title: Source
+          type: string
+          description: Source of recommendation.
+          example: Claims
+        reason:
+          title: Reason
+          type: string
+          description: Reason for the recommendation.
+          example: Coded in previous year
+        evidence:
+          title: Evidence
+          type: string
+          description: Evidence for the recommendation.
+          example: "Emmett L Brown, MD\n Coded 10/31/2015"
+      x-stoplight:
+        id: 77jtczugyjim0
+    UpdateDiagnosesPayload:
+      title: UpdateDiagnosesPayload
+      required:
+      - diagnoses
+      type: object
+      properties:
+        diagnoses:
+          title: Diagnoses
+          type: array
+          items:
+            $ref: '#/components/schemas/UpdateIcdPayload'
+          description: List of diagnoses to update.
+      x-stoplight:
+        id: 6ogt2atcsn0j2
     PatientRiskAdjustmentProfileResponse:
       title: PatientRiskAdjustmentProfileResponse
       required:
@@ -405,6 +319,92 @@ components:
           description: The metadata about the resource.
       x-stoplight:
         id: 9kz3cpfom4z2p
+    Status:
+      title: Status
+      enum:
+      - Accepted
+      - Discarded
+      - Pending
+      - Open
+      type: string
+      description: An enumeration.
+      x-stoplight:
+        id: l0dgk8wx8e14d
+    PatientIcdSuggestionResponse:
+      title: PatientIcdSuggestionResponse
+      required:
+      - code
+      - description
+      - status
+      - reason
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: ICD code.
+          example: F01
+        description:
+          title: Description
+          type: string
+          description: ICD description.
+          example: Vascular dementia
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: Status of the ICD code.
+        reason:
+          title: Reason
+          type: array
+          items:
+            $ref: '#/components/schemas/Reason'
+          description: Reason for the suggestion.
+      x-stoplight:
+        id: jv4x9ijca1cap
+    Meta:
+      title: Meta
+      required:
+      - lastUpdated
+      type: object
+      properties:
+        lastUpdated:
+          title: Lastupdated
+          type: string
+          description: When the resource version last changed.
+          format: date
+          example: '2021-01-01'
+      x-stoplight:
+        id: zeujhv44clhhb
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
+    UpdateIcdPayload:
+      title: UpdateIcdPayload
+      required:
+      - icdCode
+      - status
+      type: object
+      properties:
+        icdCode:
+          title: Icdcode
+          type: string
+          description: ICD code.
+          example: F01
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          description: Status of the ICD code.
+          example: Accepted
+      x-stoplight:
+        id: stdop502wlz3z
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

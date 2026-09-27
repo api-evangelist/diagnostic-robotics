@@ -87,6 +87,17 @@ components:
           type: string
       x-stoplight:
         id: ch4ho5h51hq0x
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
     Body_upload_api_v1_dataset__dataset_type__upload_post:
       title: Body_upload_api_v1_dataset__dataset_type__upload_post
       required:
@@ -99,17 +110,6 @@ components:
           format: binary
       x-stoplight:
         id: vx4sbohvbgo19
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

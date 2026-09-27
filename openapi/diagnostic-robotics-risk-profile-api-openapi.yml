@@ -158,6 +158,82 @@ paths:
         id: rfxhtwurjnrqh
 components:
   schemas:
+    TaskUpdatePayload:
+      title: TaskUpdatePayload
+      required:
+      - note
+      - status
+      type: object
+      properties:
+        note:
+          title: Note
+          type: string
+          description: Note for updating next step.
+          example: Patient has been assigned to PCP.
+        status:
+          allOf:
+          - $ref: '#/components/schemas/NextStepStatus'
+          description: Status of next step.
+          example: in-progress
+      x-stoplight:
+        id: mq8peq141w8in
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      x-stoplight:
+        id: ch4ho5h51hq0x
+    TaskIgnorePayload:
+      title: TaskIgnorePayload
+      required:
+      - reason
+      - duration
+      type: object
+      properties:
+        reason:
+          title: Reason
+          type: string
+          description: Reason for ignoring next step.
+          example: Patient is not eligible for this intervention.
+        duration:
+          title: Duration
+          type: integer
+          description: Duration to ignore next step in days.
+          example: 90
+      x-stoplight:
+        id: ew0071jji1xp3
+    NextStepStatus:
+      title: NextStepStatus
+      enum:
+      - suggested
+      - ignored
+      - accepted
+      - rejected
+      - cancelled
+      - on-hold
+      - failed
+      - in-progress
+      - completed
+      description: An enumeration.
+      x-stoplight:
+        id: gc9wb3hs3u0k4
     Driver:
       title: Driver
       required:
@@ -191,60 +267,6 @@ components:
           example: Missing treatment
       x-stoplight:
         id: uhplw6a9quiz6
-    NextStepStatus:
-      title: NextStepStatus
-      enum:
-      - suggested
-      - ignored
-      - accepted
-      - rejected
-      - cancelled
-      - on-hold
-      - failed
-      - in-progress
-      - completed
-      description: An enumeration.
-      x-stoplight:
-        id: gc9wb3hs3u0k4
-    PatientDetails:
-      title: PatientDetails
-      required:
-      - id
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          description: Unique identifier for the risk list.
-          example: MX938DJ8
-        firstName:
-          title: Firstname
-          type: string
-          description: First Name.
-          example: William
-        middleName:
-          title: Middlename
-          type: string
-          description: Middle Name.
-          example: Henry
-        lastName:
-          title: Lastname
-          type: string
-          description: Last Name.
-          example: Turner
-        dob:
-          title: Dob
-          type: string
-          description: Date of birth.
-          format: date
-          example: '1955-01-01'
-        state:
-          title: State
-          type: string
-          description: State.
-          example: CA
-      x-stoplight:
-        id: fqzi39kpbahnl
     NextStep:
       title: NextStep
       required:
@@ -284,6 +306,45 @@ components:
           $ref: '#/components/schemas/NextStepStatus'
       x-stoplight:
         id: yinjibtw2zmy4
+    PatientDetails:
+      title: PatientDetails
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          description: Unique identifier for the risk list.
+          example: MX938DJ8
+        firstName:
+          title: Firstname
+          type: string
+          description: First Name.
+          example: William
+        middleName:
+          title: Middlename
+          type: string
+          description: Middle Name.
+          example: Henry
+        lastName:
+          title: Lastname
+          type: string
+          description: Last Name.
+          example: Turner
+        dob:
+          title: Dob
+          type: string
+          description: Date of birth.
+          format: date
+          example: '1955-01-01'
+        state:
+          title: State
+          type: string
+          description: State.
+          example: CA
+      x-stoplight:
+        id: fqzi39kpbahnl
     ContributingFactor:
       title: ContributingFactor
       enum:
@@ -293,67 +354,6 @@ components:
       description: An enumeration.
       x-stoplight:
         id: cohyoe78gl9p5
-    ValidationError:
-      title: ValidationError
-      required:
-      - loc
-      - msg
-      - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-      x-stoplight:
-        id: ch4ho5h51hq0x
-    TaskUpdatePayload:
-      title: TaskUpdatePayload
-      required:
-      - note
-      - status
-      type: object
-      properties:
-        note:
-          title: Note
-          type: string
-          description: Note for updating next step.
-          example: Patient has been assigned to PCP.
-        status:
-          allOf:
-          - $ref: '#/components/schemas/NextStepStatus'
-          description: Status of next step.
-          example: in-progress
-      x-stoplight:
-        id: mq8peq141w8in
-    TaskIgnorePayload:
-      title: TaskIgnorePayload
-      required:
-      - reason
-      - duration
-      type: object
-      properties:
-        reason:
-          title: Reason
-          type: string
-          description: Reason for ignoring next step.
-          example: Patient is not eligible for this intervention.
-        duration:
-          title: Duration
-          type: integer
-          description: Duration to ignore next step in days.
-          example: 90
-      x-stoplight:
-        id: ew0071jji1xp3
     HTTPValidationError:
       title: HTTPValidationError
       type: object

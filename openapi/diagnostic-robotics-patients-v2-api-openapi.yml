@@ -153,6 +153,11 @@ components:
           type: string
           description: External id of patient in the soruce system
       type: object
+    CreateVisitResponse:
+      properties:
+        id:
+          type: string
+      type: object
     CreatePatientResponse:
       properties:
         uid:
@@ -166,11 +171,6 @@ components:
           enum:
           - M
           - F
-      type: object
-    CreateVisitResponse:
-      properties:
-        id:
-          type: string
       type: object
   securitySchemes:
     apikey:

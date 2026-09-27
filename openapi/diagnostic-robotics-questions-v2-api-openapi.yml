@@ -140,21 +140,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    AnswerQuestionResponse:
-      properties:
-        seed:
-          type: string
-          description: a state string saving the current state of the questionnaire
-        next_question_seed:
-          type: string
-          description: the state of the next question, you will recive a new state object for any response sent
-      type: object
-    QuestionIdentifier:
-      properties:
-        seed:
-          type: string
-          example: d94Jv39
-      type: object
     Question:
       properties:
         title:
@@ -186,6 +171,21 @@ components:
           type: object
           x-sl-internally-excluded: true
           x-sl-error-message: You do not have permission to view this reference
+      type: object
+    AnswerQuestionResponse:
+      properties:
+        seed:
+          type: string
+          description: a state string saving the current state of the questionnaire
+        next_question_seed:
+          type: string
+          description: the state of the next question, you will recive a new state object for any response sent
+      type: object
+    QuestionIdentifier:
+      properties:
+        seed:
+          type: string
+          example: d94Jv39
       type: object
     GetQuestionResponse:
       properties:
