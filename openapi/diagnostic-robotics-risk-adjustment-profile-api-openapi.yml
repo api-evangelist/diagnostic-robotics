@@ -99,76 +99,31 @@ paths:
         id: h5oyykkh018wj
 components:
   schemas:
-    PatientHccResponse:
-      title: PatientHccResponse
+    UpdateDiagnosesPayload:
+      title: UpdateDiagnosesPayload
       required:
-      - code
-      - value
-      - description
-      - version
       - diagnoses
       type: object
       properties:
-        code:
-          title: Code
-          type: string
-          description: HCC code.
-          example: HCC51
-        value:
-          title: Value
-          type: number
-          description: HCC value.
-          example: 0.346
-        description:
-          title: Description
-          type: string
-          description: HCC description.
-          example: Dementia with Complications
-        version:
-          title: Version
-          type: string
-          description: HCC version.
-          example: V24
         diagnoses:
           title: Diagnoses
           type: array
           items:
-            $ref: '#/components/schemas/CodedPatientIcdResponse'
-          description: ICD codes for the HCC.
+            $ref: '#/components/schemas/UpdateIcdPayload'
+          description: List of diagnoses to update.
       x-stoplight:
-        id: flg1u3uh1y43h
-    CodedPatientIcdResponse:
-      title: CodedPatientIcdResponse
-      required:
-      - code
-      - description
-      - documentedDate
-      - providerNpiId
+        id: 6ogt2atcsn0j2
+    HTTPValidationError:
+      title: HTTPValidationError
       type: object
       properties:
-        code:
-          title: Code
-          type: string
-          description: ICD code.
-          example: F01
-        description:
-          title: Description
-          type: string
-          description: ICD description.
-          example: Vascular dementia
-        documentedDate:
-          title: Documenteddate
-          type: string
-          description: Documented date.
-          format: date
-          example: '2021-01-01'
-        providerNpiId:
-          title: Providernpiid
-          type: string
-          description: Provider NPI ID.
-          example: '1234567890'
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
       x-stoplight:
-        id: qj2ie9pj8l3o8
+        id: 5bljvia36thct
     PatientHccRecommendationResponse:
       title: PatientHccRecommendationResponse
       required:
@@ -235,101 +190,6 @@ components:
           type: string
       x-stoplight:
         id: ch4ho5h51hq0x
-    Reason:
-      title: Reason
-      required:
-      - source
-      - reason
-      - evidence
-      type: object
-      properties:
-        source:
-          title: Source
-          type: string
-          description: Source of recommendation.
-          example: Claims
-        reason:
-          title: Reason
-          type: string
-          description: Reason for the recommendation.
-          example: Coded in previous year
-        evidence:
-          title: Evidence
-          type: string
-          description: Evidence for the recommendation.
-          example: "Emmett L Brown, MD\n Coded 10/31/2015"
-      x-stoplight:
-        id: 77jtczugyjim0
-    UpdateDiagnosesPayload:
-      title: UpdateDiagnosesPayload
-      required:
-      - diagnoses
-      type: object
-      properties:
-        diagnoses:
-          title: Diagnoses
-          type: array
-          items:
-            $ref: '#/components/schemas/UpdateIcdPayload'
-          description: List of diagnoses to update.
-      x-stoplight:
-        id: 6ogt2atcsn0j2
-    PatientRiskAdjustmentProfileResponse:
-      title: PatientRiskAdjustmentProfileResponse
-      required:
-      - patient
-      - codedRiskScore
-      - uncodedRiskScore
-      - codedConditions
-      - uncodedConditions
-      - meta
-      type: object
-      properties:
-        patient:
-          title: Patient
-          type: string
-          description: Unique identifier of the patient.
-          example: MX938DJ8
-        codedRiskScore:
-          title: Codedriskscore
-          type: number
-          description: HCC Risk score of the patient.
-          example: 1.8
-        uncodedRiskScore:
-          title: Uncodedriskscore
-          type: number
-          description: Uncoded HCC Risk score gap of the patient.
-          example: 0.3
-        codedConditions:
-          title: Codedconditions
-          type: array
-          items:
-            $ref: '#/components/schemas/PatientHccResponse'
-          description: Coded diagnoses for the patient.
-        uncodedConditions:
-          title: Uncodedconditions
-          type: array
-          items:
-            $ref: '#/components/schemas/PatientHccRecommendationResponse'
-          description: Suggested diagnoses for the patient.
-        meta:
-          title: Meta
-          allOf:
-          - $ref: '#/components/schemas/Meta'
-          description: The metadata about the resource.
-      x-stoplight:
-        id: 9kz3cpfom4z2p
-    Status:
-      title: Status
-      enum:
-      - Accepted
-      - Discarded
-      - Pending
-      - Open
-      type: string
-      description: An enumeration.
-      x-stoplight:
-        id: l0dgk8wx8e14d
     PatientIcdSuggestionResponse:
       title: PatientIcdSuggestionResponse
       required:
@@ -375,17 +235,42 @@ components:
           example: '2021-01-01'
       x-stoplight:
         id: zeujhv44clhhb
-    HTTPValidationError:
-      title: HTTPValidationError
+    Status:
+      title: Status
+      enum:
+      - Accepted
+      - Discarded
+      - Pending
+      - Open
+      type: string
+      description: An enumeration.
+      x-stoplight:
+        id: l0dgk8wx8e14d
+    Reason:
+      title: Reason
+      required:
+      - source
+      - reason
+      - evidence
       type: object
       properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
+        source:
+          title: Source
+          type: string
+          description: Source of recommendation.
+          example: Claims
+        reason:
+          title: Reason
+          type: string
+          description: Reason for the recommendation.
+          example: Coded in previous year
+        evidence:
+          title: Evidence
+          type: string
+          description: Evidence for the recommendation.
+          example: "Emmett L Brown, MD\n Coded 10/31/2015"
       x-stoplight:
-        id: 5bljvia36thct
+        id: 77jtczugyjim0
     UpdateIcdPayload:
       title: UpdateIcdPayload
       required:
@@ -405,6 +290,121 @@ components:
           example: Accepted
       x-stoplight:
         id: stdop502wlz3z
+    PatientRiskAdjustmentProfileResponse:
+      title: PatientRiskAdjustmentProfileResponse
+      required:
+      - patient
+      - codedRiskScore
+      - uncodedRiskScore
+      - codedConditions
+      - uncodedConditions
+      - meta
+      type: object
+      properties:
+        patient:
+          title: Patient
+          type: string
+          description: Unique identifier of the patient.
+          example: MX938DJ8
+        codedRiskScore:
+          title: Codedriskscore
+          type: number
+          description: HCC Risk score of the patient.
+          example: 1.8
+        uncodedRiskScore:
+          title: Uncodedriskscore
+          type: number
+          description: Uncoded HCC Risk score gap of the patient.
+          example: 0.3
+        codedConditions:
+          title: Codedconditions
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientHccResponse'
+          description: Coded diagnoses for the patient.
+        uncodedConditions:
+          title: Uncodedconditions
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientHccRecommendationResponse'
+          description: Suggested diagnoses for the patient.
+        meta:
+          title: Meta
+          allOf:
+          - $ref: '#/components/schemas/Meta'
+          description: The metadata about the resource.
+      x-stoplight:
+        id: 9kz3cpfom4z2p
+    CodedPatientIcdResponse:
+      title: CodedPatientIcdResponse
+      required:
+      - code
+      - description
+      - documentedDate
+      - providerNpiId
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: ICD code.
+          example: F01
+        description:
+          title: Description
+          type: string
+          description: ICD description.
+          example: Vascular dementia
+        documentedDate:
+          title: Documenteddate
+          type: string
+          description: Documented date.
+          format: date
+          example: '2021-01-01'
+        providerNpiId:
+          title: Providernpiid
+          type: string
+          description: Provider NPI ID.
+          example: '1234567890'
+      x-stoplight:
+        id: qj2ie9pj8l3o8
+    PatientHccResponse:
+      title: PatientHccResponse
+      required:
+      - code
+      - value
+      - description
+      - version
+      - diagnoses
+      type: object
+      properties:
+        code:
+          title: Code
+          type: string
+          description: HCC code.
+          example: HCC51
+        value:
+          title: Value
+          type: number
+          description: HCC value.
+          example: 0.346
+        description:
+          title: Description
+          type: string
+          description: HCC description.
+          example: Dementia with Complications
+        version:
+          title: Version
+          type: string
+          description: HCC version.
+          example: V24
+        diagnoses:
+          title: Diagnoses
+          type: array
+          items:
+            $ref: '#/components/schemas/CodedPatientIcdResponse'
+          description: ICD codes for the HCC.
+      x-stoplight:
+        id: flg1u3uh1y43h
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2

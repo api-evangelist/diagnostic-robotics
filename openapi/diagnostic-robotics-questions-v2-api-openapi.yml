@@ -165,22 +165,6 @@ components:
           - blood-pressure
           - pain-scale
       type: object
-    AnswerQuestionRequest:
-      properties:
-        response:
-          type: object
-          x-sl-internally-excluded: true
-          x-sl-error-message: You do not have permission to view this reference
-      type: object
-    AnswerQuestionResponse:
-      properties:
-        seed:
-          type: string
-          description: a state string saving the current state of the questionnaire
-        next_question_seed:
-          type: string
-          description: the state of the next question, you will recive a new state object for any response sent
-      type: object
     QuestionIdentifier:
       properties:
         seed:
@@ -197,6 +181,22 @@ components:
         total_questions:
           type: integer
           description: estimated total number of questions, used for progress indication
+      type: object
+    AnswerQuestionResponse:
+      properties:
+        seed:
+          type: string
+          description: a state string saving the current state of the questionnaire
+        next_question_seed:
+          type: string
+          description: the state of the next question, you will recive a new state object for any response sent
+      type: object
+    AnswerQuestionRequest:
+      properties:
+        response:
+          type: object
+          x-sl-internally-excluded: true
+          x-sl-error-message: You do not have permission to view this reference
       type: object
   securitySchemes:
     apikey:

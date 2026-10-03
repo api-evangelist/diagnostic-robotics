@@ -154,6 +154,86 @@ paths:
         id: p89zz0jysuu25
 components:
   schemas:
+    RiskListPatientItem:
+      title: RiskListPatientItem
+      required:
+      - patientId
+      - patient
+      - riskScore
+      - riskProfileUrl
+      - patientProfileUrl
+      type: object
+      properties:
+        patientId:
+          title: Patientid
+          type: string
+          description: Unique identifier for the patient.
+          example: MX938DJ8
+        patient:
+          title: Patient
+          allOf:
+          - $ref: '#/components/schemas/PatientDetails'
+          description: Patient details.
+        riskScore:
+          title: Riskscore
+          type: number
+          description: Risk score.
+          example: 97.6
+        riskProfileUrl:
+          title: Riskprofileurl
+          type: string
+          description: Location of the patient risk profile.
+          example: api/v2/RiskProfile/MX938DJ8
+        patientProfileUrl:
+          title: Patientprofileurl
+          type: string
+          description: Location of the patient profile.
+          example: api/v2/PatientProfile/MX938DJ8
+      x-stoplight:
+        id: rans8hib5imnv
+    RiskList:
+      title: RiskList
+      required:
+      - metadata
+      - total
+      - offset
+      - entities
+      type: object
+      properties:
+        metadata:
+          title: Metadata
+          allOf:
+          - $ref: '#/components/schemas/RiskListMetadata'
+          description: Risk list metadata.
+        total:
+          title: Total
+          type: integer
+          description: Size
+          example: 34
+        offset:
+          title: Offset
+          type: integer
+          description: Size
+          example: 0
+        entities:
+          title: Entities
+          type: array
+          items:
+            $ref: '#/components/schemas/RiskListPatientItem'
+          description: List of patients in the risk list.
+      x-stoplight:
+        id: e3wu3wiwz456y
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
     ValidationError:
       title: ValidationError
       required:
@@ -216,54 +296,6 @@ components:
           example: CA
       x-stoplight:
         id: fqzi39kpbahnl
-    RiskListPatientItem:
-      title: RiskListPatientItem
-      required:
-      - patientId
-      - patient
-      - riskScore
-      - riskProfileUrl
-      - patientProfileUrl
-      type: object
-      properties:
-        patientId:
-          title: Patientid
-          type: string
-          description: Unique identifier for the patient.
-          example: MX938DJ8
-        patient:
-          title: Patient
-          allOf:
-          - $ref: '#/components/schemas/PatientDetails'
-          description: Patient details.
-        riskScore:
-          title: Riskscore
-          type: number
-          description: Risk score.
-          example: 97.6
-        riskProfileUrl:
-          title: Riskprofileurl
-          type: string
-          description: Location of the patient risk profile.
-          example: api/v2/RiskProfile/MX938DJ8
-        patientProfileUrl:
-          title: Patientprofileurl
-          type: string
-          description: Location of the patient profile.
-          example: api/v2/PatientProfile/MX938DJ8
-      x-stoplight:
-        id: rans8hib5imnv
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
     RiskListMetadata:
       title: RiskListMetadata
       required:
@@ -307,38 +339,6 @@ components:
           example: api/v2/RiskList/a773fc5b078a4070a20122d7a2409d94
       x-stoplight:
         id: cracaemvdsqjf
-    RiskList:
-      title: RiskList
-      required:
-      - metadata
-      - total
-      - offset
-      - entities
-      type: object
-      properties:
-        metadata:
-          title: Metadata
-          allOf:
-          - $ref: '#/components/schemas/RiskListMetadata'
-          description: Risk list metadata.
-        total:
-          title: Total
-          type: integer
-          description: Size
-          example: 34
-        offset:
-          title: Offset
-          type: integer
-          description: Size
-          example: 0
-        entities:
-          title: Entities
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskListPatientItem'
-          description: List of patients in the risk list.
-      x-stoplight:
-        id: e3wu3wiwz456y
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2
