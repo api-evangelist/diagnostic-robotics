@@ -138,6 +138,21 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    CreatePatientRequest:
+      properties:
+        age:
+          type: integer
+          minimum: 0
+        sex:
+          type: string
+          example: M
+          enum:
+          - M
+          - F
+        external_source_id:
+          type: string
+          description: External id of patient in the soruce system
+      type: object
     CreateVisitResponse:
       properties:
         id:
@@ -156,21 +171,6 @@ components:
           enum:
           - M
           - F
-      type: object
-    CreatePatientRequest:
-      properties:
-        age:
-          type: integer
-          minimum: 0
-        sex:
-          type: string
-          example: M
-          enum:
-          - M
-          - F
-        external_source_id:
-          type: string
-          description: External id of patient in the soruce system
       type: object
   securitySchemes:
     apikey:

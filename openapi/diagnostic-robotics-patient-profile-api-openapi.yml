@@ -50,49 +50,6 @@ paths:
         id: s4g1mu2oona9d
 components:
   schemas:
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-      x-stoplight:
-        id: 5bljvia36thct
-    PatientProfile:
-      title: PatientProfile
-      required:
-      - patientId
-      - updateDate
-      - patient
-      - sections
-      type: object
-      properties:
-        patientId:
-          title: Patientid
-          type: string
-          description: Unique identifier of the patient .
-          example: MX938DJ8
-        updateDate:
-          title: Updatedate
-          type: string
-          description: The date when the patient information was last updated.
-          format: date
-        patient:
-          title: Patient
-          allOf:
-          - $ref: '#/components/schemas/PatientDetails'
-          description: Patient details.
-        sections:
-          title: Sections
-          type: array
-          items:
-            $ref: '#/components/schemas/PatientInformationSection'
-          description: List of patient information sections.
-      x-stoplight:
-        id: pzgj9u62xcj3b
     PatientDetails:
       title: PatientDetails
       required:
@@ -155,6 +112,17 @@ components:
             Race: White'
       x-stoplight:
         id: 2e0sm7kfzwetc
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+      x-stoplight:
+        id: 5bljvia36thct
     ValidationError:
       title: ValidationError
       required:
@@ -178,6 +146,38 @@ components:
           type: string
       x-stoplight:
         id: ch4ho5h51hq0x
+    PatientProfile:
+      title: PatientProfile
+      required:
+      - patientId
+      - updateDate
+      - patient
+      - sections
+      type: object
+      properties:
+        patientId:
+          title: Patientid
+          type: string
+          description: Unique identifier of the patient .
+          example: MX938DJ8
+        updateDate:
+          title: Updatedate
+          type: string
+          description: The date when the patient information was last updated.
+          format: date
+        patient:
+          title: Patient
+          allOf:
+          - $ref: '#/components/schemas/PatientDetails'
+          description: Patient details.
+        sections:
+          title: Sections
+          type: array
+          items:
+            $ref: '#/components/schemas/PatientInformationSection'
+          description: List of patient information sections.
+      x-stoplight:
+        id: pzgj9u62xcj3b
   securitySchemes:
     OAuth2PasswordBearer:
       type: oauth2
