@@ -64,41 +64,148 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Diagnostic Robotics is a clinical AI company (Tel Aviv / Boston) whose platform turns medical claims, EHR
-and FHIR data into predictive risk stratification, actionable care next steps, HCC/RAF risk-adjustment gap
-closure and automated care operations for health plans, providers and care organizations.
+Diagnostic Robotics is a Tel Aviv and Boston based clinical AI company whose platform turns medical claims, EHR and FHIR data into predictive risk stratification, actionable next steps and automated care operations for health plans, providers and care organizations. The company publishes two public developer projects on a Stoplight-hosted documentation portal: a Patient Questionnaire / triage API that walks a patient through symptom search, adaptive questioning and a triage outcome, and a Proactive Patient Risk Feed (Precision Population Health) API that ingests FHIR R4 US Core, CCLF and custom claims datasets and returns ranked risk lists, per-patient risk profiles, HCC/RAF risk-adjustment gaps and embeddable widgets. Access is OAuth 2.0 client-credentials or API key and is provisioned per customer on a dedicated per-client subdomain.
 
-- Website: https://diagnosticrobotics.com/
-- Developer portal: https://docs.diagnosticrobotics.com/
-- Trust center: https://diagnosticrobotics.com/about/trust-center
-- Status page: https://diagnosticrobotics.statuspage.io
+**Areas:** Health · Healthcare · Clinical AI · Population Health · Risk Adjustment · Predictive Analytics · triage · FHIR · Claims Data · Care Management · Payers · Medical Coding
 
-## APIs profiled
+## Diagnostic Robotics on APIs.io
 
-| API | Spec | Ops | Auth |
-|---|---|---|---|
-| Precision Population Health (Proactive Patient Risk Feed) | OpenAPI 3.0.2 | 15 | OAuth 2.0 client credentials |
-| Patient Questionnaire | Swagger 2.0 | 13 | `x-client` API key |
-| Symptom Search Service | Swagger 2.0 | 2 | `x-client` API key |
+Everything profiled for Diagnostic Robotics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/diagnostic-robotics/](https://apis.io/providers/diagnostic-robotics/)** — or go straight to one of the APIs or properties below.
 
-All three contracts were harvested from the company's public Stoplight workspace (`wk:2242`,
-`docs.diagnosticrobotics.com`) and are stored verbatim in `openapi/_original/`.
+### APIs (12)
 
-## What this profile records
+- [Diagnostic Robotics API Auth API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-api-auth-api/) — The API Auth API from Diagnostic Robotics — 1 operation(s) for api auth.
+- [Diagnostic Robotics Dataset Upload API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-dataset-upload-api-api/) — The Dataset Upload API API from Diagnostic Robotics — 1 operation(s) for dataset upload api.
+- [Diagnostic Robotics Default API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-default-api/) — Global
+- [Diagnostic Robotics Patient Profile API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-patient-profile-api/) — The Patient Profile API from Diagnostic Robotics — 1 operation(s) for patient profile.
+- [Diagnostic Robotics Patients v2 API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-patients-v2-api/) — Patients resource
+- [Diagnostic Robotics Questions v2 API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-questions-v2-api/) — Questions resource
+- [Diagnostic Robotics Risk Adjustment Profile API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-risk-adjustment-profile-api/) — The Risk Adjustment Profile API from Diagnostic Robotics — 2 operation(s) for risk adjustment profile.
+- [Diagnostic Robotics Risk List API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-risk-list-api-api/) — The Risk List API API from Diagnostic Robotics — 3 operation(s) for risk list api.
+- [Diagnostic Robotics Risk Profile API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-risk-profile-api/) — The Risk Profile API from Diagnostic Robotics — 3 operation(s) for risk profile.
+- [Diagnostic Robotics Visits API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-visits-api/) — The Visits API from Diagnostic Robotics — 1 operation(s) for visits.
+- [Diagnostic Robotics Visits v2 API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-visits-v2-api/) — Patient visits resource
+- [Diagnostic Robotics Widgets API](https://apis.io/apis/diagnostic-robotics/diagnostic-robotics-widgets-api-api/) — The Widgets API API from Diagnostic Robotics — 4 operation(s) for widgets api.
 
-- `openapi/` - three harvested contracts plus verbatim originals
-- `authentication/`, `scopes/` - OAuth 2.0 + API key profile; zero scopes exist, and the declared Auth0 tenant no longer resolves
-- `conventions/`, `errors/`, `data-model/`, `lifecycle/`, `conformance/` - derived runtime semantics, error envelope, entity graph, versioning and standards posture
-- `sandbox/` - live Stoplight Prism mock servers, the only way to exercise this API without a contract
-- `components/` - the four iframe widget surfaces
-- `security/`, `well-known/` - domain security probe, trust center, and a recorded absence of every `/.well-known/` document
-- `plans/`, `rate-limits/`, `packages/` - honest zeros, each with the URLs that were checked
-- `skills/`, `llms/`, `overlays/`, `mcp/` - generated agent-facing artifacts grounded in real operationIds
+### Published properties
 
-## Notable findings
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- The API host answers **HTTP 200 with a React SPA shell for every `/.well-known/` path** and for `/openapi.json`. Those 200s are not documents and are recorded as misses.
-- The published OpenAPI's `authorizationCode` flow points at `digital-outreach.us.auth0.com`, a tenant that returns `404 Unknown host`.
-- The Statuspage tenant is live but `updated_at` is 2020-06-29 and the indicator has read "Partial System Outage" ever since.
-- Both questionnaire specs publish the literal placeholder host `env-name.diagnosticrobotics.com`.
-- No idempotency contract, no documented rate limit, no `429`, no SDK, no pricing.
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [diagnostic-robotics-mcp.yml](https://apis.io/servers/diagnostic-robotics/diagnostic-robotics-mcp-yml/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Diagnostic Robotics API](https://apis.io/collections/diagnostic-robotics/open-diagnostic-robotics-patient-questionnaire/)
+- [Diagnostic Robotics API](https://apis.io/collections/diagnostic-robotics/open-diagnostic-robotics-precision-population-health/)
+- [Search Service](https://apis.io/collections/diagnostic-robotics/open-diagnostic-robotics-symptom-search/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Diagnostic Robotics Patient Questionnaire Overlay](https://apis.io/overlays/diagnostic-robotics/diagnostic-robotics-patient-questionnaire-overlay/)
+- [Diagnostic Robotics Precision Population Health Overlay](https://apis.io/overlays/diagnostic-robotics/diagnostic-robotics-precision-population-health-overlay/)
+- [Diagnostic Robotics Symptom Search Overlay](https://apis.io/overlays/diagnostic-robotics/diagnostic-robotics-symptom-search-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Diagnostic Robotics Authentication](https://apis.io/security/diagnostic-robotics/diagnostic-robotics-authentication/)
+- [Diagnostic Robotics Domain Security](https://apis.io/security/diagnostic-robotics/diagnostic-robotics-domain-security/)
+- [Diagnostic Robotics Trust Center](https://apis.io/security/diagnostic-robotics/diagnostic-robotics-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Diagnostic Robotics Scopes](https://apis.io/scopes/diagnostic-robotics/diagnostic-robotics-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Diagnostic Robotics Plans Pricing](https://apis.io/plans/diagnostic-robotics/diagnostic-robotics-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Diagnostic Robotics Rate Limits](https://apis.io/rate-limits/diagnostic-robotics/diagnostic-robotics-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://diagnosticrobotics.com/)
+- [Documentation](https://docs.diagnosticrobotics.com/)
+- [Getting started](https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/3y8qknbsqo42r-authentication)
+- [API reference](https://docs.diagnosticrobotics.com/docs/proactive-patient-risk-feed-api/usgko1x40nf1c-diagnostic-robotics-api)
+- [Support](https://diagnosticrobotics.com/contact)
+- [Blog](https://diagnosticrobotics.com/thought-leadership)
+- [Compliance](https://diagnosticrobotics.com/about/trust-center)
+- [Terms of service](https://diagnosticrobotics.com/terms)
+- [Privacy policy](https://diagnosticrobotics.com/privacy)
+- [GitHub](https://github.com/Diagnostic-Robotics)
+- [Status](https://diagnosticrobotics.statuspage.io)
+
+## API Evangelist rating
+
+**Kin Score 47.0** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 43.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 66.1 |
+| Access clarity | 36.8 |
+
+**Agent readiness 32.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 43.0** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/diagnostic-robotics/](https://apis.io/providers/diagnostic-robotics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Diagnostic Robotics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/diagnostic-robotics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
